@@ -10,6 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../assets/plugins/fontawesome/css/fontawesome.min.css";
 import "../assets/plugins/fontawesome/css/all.min.css";
 import "../assets/css/style.css";
+import "../components/doctor/app.css";
 
 const Appointments = lazy(() =>
   import("../components/doctor/Appointments/appointments")
