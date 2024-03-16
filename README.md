@@ -1,2 +1,1 @@
-npm install
-npm start
+SCRUM Hospital front-end project using reactjs.
