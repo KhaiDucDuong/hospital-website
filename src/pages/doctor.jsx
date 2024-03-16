@@ -1,6 +1,6 @@
-import Header from "../components/doctor/header";
+import Header from "../components/Header";
 import Breadcrumb from "../components/doctor/breadcrumb";
-import Footer from "../components/doctor/footer";
+import Footer from "../components/Footer";
 import ProfileSidebar from "../components/doctor/profileSidebar";
 import DashCard from "../components/doctor/Dashboard/dashcard";
 import AppointmentTab from "../components/doctor/Dashboard/appointmentTab";
@@ -10,6 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../assets/plugins/fontawesome/css/fontawesome.min.css";
 import "../assets/plugins/fontawesome/css/all.min.css";
 import "../assets/css/style.css";
+import "../components/doctor/app.css";
 
 const Appointments = lazy(() =>
   import("../components/doctor/Appointments/appointments")
