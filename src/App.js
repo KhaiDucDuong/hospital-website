@@ -5,6 +5,7 @@ import Doctor from "./pages/doctor";
 import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Booking from "./pages/patient/Booking";
 // import * as jquery from "./assets/js/jquery.min.js";
 // import * as popper from "./assets/js/popper.min.js";
 // import * as bootstrap from"./assets/js/bootstrap.min.js";
@@ -20,12 +21,13 @@ function App() {
           <Route path='/doctor' element={<Doctor />}></Route>
           <Route path='/register' element={<Register/>}></Route>
           <Route path='/login' element={<Login/>}></Route>
-          {/* <Route path='/admin' element={<AdminHome/>}></Route>
           <Route path='/patient/booking' element={<Booking/>}></Route>
-          <Route path='/patient/search' element={<SearchingDoctor/>}></Route>
+          {/*<Route path='/patient/search' element={<SearchingDoctor/>}></Route>
           <Route path='/patient/doctor-profile' element={<DoctorProfile/>}></Route>
           <Route path='/patient/profile' element={<PatientProfile/>}></Route>
-          <Route path='/patient/settings' element={<PatientSettings/>}></Route> */}
+          <Route path='/patient/settings' element={<PatientSettings/>}></Route> 
+          <Route path='/admin' element={<AdminHome/>}></Route>*/}
+          <Route path="*" element={<Homepage />} />
         </Routes>
       </BrowserRouter>
   );
