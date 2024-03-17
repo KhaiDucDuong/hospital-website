@@ -3,10 +3,10 @@ export default function Header() {
     <div className="header">
       {/* Logo */}
       <div className="header-left">
-        <a href="index.html" className="logo">
+        <a href="/admin" className="logo">
           <img src="../img/logo.png" alt="Logo" />
         </a>
-        <a href="index.html" className="logo logo-small">
+        <a href="/admin" className="logo logo-small">
           <img
             src="../img/logo-small.png"
             alt="Logo"

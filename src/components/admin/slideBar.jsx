@@ -11,7 +11,7 @@ export default function SlideBar({ selectedWidget, setSelectedWidget }) {
               className={selectedWidget == "dashboard" && "active"}
               onClick={() => setSelectedWidget("dashboard")}
             >
-              <a>
+              <a className="sidebar-items">
                 <i className="fe fe-home" /> <span>Dashboard</span>
               </a>
             </li>
@@ -19,7 +19,7 @@ export default function SlideBar({ selectedWidget, setSelectedWidget }) {
               className={selectedWidget == "appointments" && "active"}
               onClick={() => setSelectedWidget("appointments")}
             >
-              <a>
+              <a className="sidebar-items">
                 <i className="fe fe-layout" /> <span>Appointments</span>
               </a>
             </li>
@@ -27,7 +27,7 @@ export default function SlideBar({ selectedWidget, setSelectedWidget }) {
               className={selectedWidget == "departments" && "active"}
               onClick={() => setSelectedWidget("departments")}
             >
-              <a>
+              <a className="sidebar-items">
                 <i className="fe fe-users" /> <span>Departments</span>
               </a>
             </li>
@@ -35,7 +35,7 @@ export default function SlideBar({ selectedWidget, setSelectedWidget }) {
              className={selectedWidget == "doctors" && "active"}
              onClick={() => setSelectedWidget("doctors")}
             >
-              <a>
+              <a className="sidebar-items">
                 <i className="fe fe-user-plus" /> <span>Doctors</span>
               </a>
             </li>
@@ -43,7 +43,7 @@ export default function SlideBar({ selectedWidget, setSelectedWidget }) {
              className={selectedWidget == "patients" && "active"}
              onClick={() => setSelectedWidget("patients")}
             >
-              <a>
+              <a className="sidebar-items">
                 <i className="fe fe-user" /> <span>Patients</span>
               </a>
             </li>
@@ -51,7 +51,7 @@ export default function SlideBar({ selectedWidget, setSelectedWidget }) {
              className={selectedWidget == "reviews" && "active"}
              onClick={() => setSelectedWidget("reviews")}
             >
-              <a>
+              <a className="sidebar-items">
                 <i className="fe fe-star-o" /> <span>Reviews</span>
               </a>
             </li>
