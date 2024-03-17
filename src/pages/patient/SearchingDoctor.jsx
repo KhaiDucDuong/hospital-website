@@ -2,9 +2,26 @@ import React from 'react'
 import Breadcrumb from './Breadcum'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
+import { useEffect, useState } from "react";
 
 function SearchingDoctor() {
-  const doctorID = 123;
+  const [listdoctors, setListdoctors] = useState([]);
+
+    useEffect(() => {
+        const url = "http://localhost:8080/doctors/allDoctors";
+
+        const fetchData = async () => {
+            try {
+                const response = await fetch(url, {method: 'GET' });
+                const allDoctors = await response.json();
+                setListdoctors(allDoctors);
+            } catch (error) {
+                console.log("error", error);
+            }
+        };
+
+        fetchData();
+    }, []);
   return (
     <>
       <Header/>
@@ -108,6 +125,7 @@ function SearchingDoctor() {
 
               <div className="col-md-12 col-lg-8 col-xl-9">
                 {/* Doctor Widget */}
+                {listdoctors.map((doctor,index) => (
                 <div className="card">
                   <div className="card-body">
                     <div className="doctor-widget">
@@ -122,19 +140,19 @@ function SearchingDoctor() {
                           </a>
                         </div>
                         <div className="doc-info-cont">
-                          <h4 className="doc-name">
-                            <a href="/patient/doctor-profile">Dr. Ruby Perrin</a>
+                          <h4 className="doc-name" >
+                            <a href="/patient/doctor-profile">{doctor.fullname}</a>
                           </h4>
                           <p className="doc-speciality">
-                            MDS - Periodontology and Oral Implantology, BDS
+                            Bệnh Viện dã chiến HCMUTêÊ
                           </p>
                           <h5 className="doc-department">
                             <img
                               src="../../img/specialities/specialities-05.png"
                               className="img-fluid"
-                              alt="Speciality"
+                              alt="Speciality" key={index}
                             />
-                            Dentist
+                            Specialize: {doctor.specialize}
                           </h5>
                           <div className="rating">
                             <i className="fas fa-star filled" />
@@ -148,7 +166,7 @@ function SearchingDoctor() {
                           </div>
                           <div className="clinic-details">
                             <p className="doc-location">
-                              <i className="fas fa-map-marker-alt" /> Florida, USA
+                              <i className="fas fa-map-marker-alt" /> Sài Gòn, Việt Lam
                             </p>
                             <ul className="clinic-gallery">
                               <li>
@@ -236,529 +254,19 @@ function SearchingDoctor() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div>))}
                 {/* /Doctor Widget */}
                 {/* Doctor Widget */}
-                <div className="card">
-                  <div className="card-body">
-                    <div className="doctor-widget">
-                      <div className="doc-info-left">
-                        <div className="doctor-img">
-                          <a href="/patient/doctor-profile">
-                            <img
-                              src="../../img/doctors/doctor-thumb-02.jpg"
-                              className="img-fluid"
-                              alt="User Image"
-                            />
-                          </a>
-                        </div>
-                        <div className="doc-info-cont">
-                          <h4 className="doc-name">
-                          <a href={`/patient/doctor-profile/${doctorID}`}>Tiến gié</a>
-                          </h4>
-                          <p className="doc-speciality">
-                            BDS, MDS - Oral &amp; Maxillofacial Surgery
-                          </p>
-                          <h5 className="doc-department">
-                            <img
-                              src="../../img/specialities/specialities-05.png"
-                              className="img-fluid"
-                              alt="Speciality"
-                            />
-                            Dentist
-                          </h5>
-                          <div className="rating">
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star" />
-                            <span className="d-inline-block average-rating">
-                              (35)
-                            </span>
-                          </div>
-                          <div className="clinic-details">
-                            <p className="doc-location">
-                              <i className="fas fa-map-marker-alt" /> Newyork, USA
-                            </p>
-                            <ul className="clinic-gallery">
-                              <li>
-                                <a
-                                  href="../../img/features/feature-01.jpg"
-                                  data-fancybox="gallery"
-                                >
-                                  <img
-                                    src="../../img/features/feature-01.jpg"
-                                    alt="Feature"
-                                  />
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="../../img/features/feature-02.jpg"
-                                  data-fancybox="gallery"
-                                >
-                                  <img
-                                    src="../../img/features/feature-02.jpg"
-                                    alt="Feature"
-                                  />
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="../../img/features/feature-03.jpg"
-                                  data-fancybox="gallery"
-                                >
-                                  <img
-                                    src="../../img/features/feature-03.jpg"
-                                    alt="Feature"
-                                  />
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="../../img/features/feature-04.jpg"
-                                  data-fancybox="gallery"
-                                >
-                                  <img
-                                    src="../../img/features/feature-04.jpg"
-                                    alt="Feature"
-                                  />
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                          <div className="clinic-services">
-                            <span>Dental Fillings</span>
-                            <span> Whitneing</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="doc-info-right">
-                        <div className="clini-infos">
-                          <ul>
-                            <li>
-                              <i className="far fa-thumbs-up" /> 100%
-                            </li>
-                            <li>
-                              <i className="far fa-comment" /> 35 Feedback
-                            </li>
-                            <li>
-                              <i className="fas fa-map-marker-alt" /> Newyork, USA
-                            </li>
-                            <li>
-                              <i className="far fa-money-bill-alt" /> $50 - $300{" "}
-                              <i
-                                className="fas fa-info-circle"
-                                data-toggle="tooltip"
-                                title="Lorem Ipsum"
-                              />
-                            </li>
-                          </ul>
-                        </div>
-                        <div className="clinic-booking">
-                          <a className="view-pro-btn" href={`/patient/doctor-profile/${doctorID}`}>
-                            View Profile
-                          </a>
-                          <a className="apt-btn" href="/patient/booking">
-                            Book Appointment
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+
                 {/* /Doctor Widget */}
                 {/* Doctor Widget */}
-                <div className="card">
-                  <div className="card-body">
-                    <div className="doctor-widget">
-                      <div className="doc-info-left">
-                        <div className="doctor-img">
-                          <a href="/patient/doctor-profile">
-                            <img
-                              src="../../img/doctors/doctor-thumb-03.jpg"
-                              className="img-fluid"
-                              alt="User Image"
-                            />
-                          </a>
-                        </div>
-                        <div className="doc-info-cont">
-                          <h4 className="doc-name">
-                            <a href="/patient/doctor-profile">Dr. Deborah Angel</a>
-                          </h4>
-                          <p className="doc-speciality">
-                            MBBS, MD - General Medicine, DNB - Cardiology
-                          </p>
-                          <p className="doc-department">
-                            <img
-                              src="../../img/specialities/specialities-04.png"
-                              className="img-fluid"
-                              alt="Speciality"
-                            />
-                            Cardiology
-                          </p>
-                          <div className="rating">
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star" />
-                            <span className="d-inline-block average-rating">
-                              (27)
-                            </span>
-                          </div>
-                          <div className="clinic-details">
-                            <p className="doc-location">
-                              <i className="fas fa-map-marker-alt" /> Georgia, USA
-                            </p>
-                            <ul className="clinic-gallery">
-                              <li>
-                                <a
-                                  href="../../img/features/feature-01.jpg"
-                                  data-fancybox="gallery"
-                                >
-                                  <img
-                                    src="../../img/features/feature-01.jpg"
-                                    alt="Feature"
-                                  />
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="../../img/features/feature-02.jpg"
-                                  data-fancybox="gallery"
-                                >
-                                  <img
-                                    src="../../img/features/feature-02.jpg"
-                                    alt="Feature"
-                                  />
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="../../img/features/feature-03.jpg"
-                                  data-fancybox="gallery"
-                                >
-                                  <img
-                                    src="../../img/features/feature-03.jpg"
-                                    alt="Feature"
-                                  />
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="../../img/features/feature-04.jpg"
-                                  data-fancybox="gallery"
-                                >
-                                  <img
-                                    src="../../img/features/feature-04.jpg"
-                                    alt="Feature"
-                                  />
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                          <div className="clinic-services">
-                            <span>Dental Fillings</span>
-                            <span> Whitneing</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="doc-info-right">
-                        <div className="clini-infos">
-                          <ul>
-                            <li>
-                              <i className="far fa-thumbs-up" /> 99%
-                            </li>
-                            <li>
-                              <i className="far fa-comment" /> 35 Feedback
-                            </li>
-                            <li>
-                              <i className="fas fa-map-marker-alt" /> Newyork, USA
-                            </li>
-                            <li>
-                              <i className="far fa-money-bill-alt" /> $100 - $400{" "}
-                              <i
-                                className="fas fa-info-circle"
-                                data-toggle="tooltip"
-                                title="Lorem Ipsum"
-                              />
-                            </li>
-                          </ul>
-                        </div>
-                        <div className="clinic-booking">
-                          <a className="view-pro-btn" href="/patient/doctor-profile">
-                            View Profile
-                          </a>
-                          <a className="apt-btn" href="/patient/booking">
-                            Book Appointment
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+
                 {/* /Doctor Widget */}
                 {/* Doctor Widget */}
-                <div className="card">
-                  <div className="card-body">
-                    <div className="doctor-widget">
-                      <div className="doc-info-left">
-                        <div className="doctor-img">
-                          <a href="/patient/doctor-profile">
-                            <img
-                              src="../../img/doctors/doctor-thumb-04.jpg"
-                              className="img-fluid"
-                              alt="User Image"
-                            />
-                          </a>
-                        </div>
-                        <div className="doc-info-cont">
-                          <h4 className="doc-name">
-                            <a href="/patient/doctor-profile">Dr. Sofia Brient</a>
-                          </h4>
-                          <p className="doc-speciality">
-                            MBBS, MS - General Surgery, MCh - Urology
-                          </p>
-                          <p className="doc-department">
-                            <img
-                              src="../../img/specialities/specialities-01.png"
-                              className="img-fluid"
-                              alt="Speciality"
-                            />
-                            Urology
-                          </p>
-                          <div className="rating">
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star" />
-                            <span className="d-inline-block average-rating">(4)</span>
-                          </div>
-                          <div className="clinic-details">
-                            <p className="doc-location">
-                              <i className="fas fa-map-marker-alt" /> Louisiana, USA
-                            </p>
-                            <ul className="clinic-gallery">
-                              <li>
-                                <a
-                                  href="../../img/features/feature-01.jpg"
-                                  data-fancybox="gallery"
-                                >
-                                  <img
-                                    src="../../img/features/feature-01.jpg"
-                                    alt="Feature"
-                                  />
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="../../img/features/feature-02.jpg"
-                                  data-fancybox="gallery"
-                                >
-                                  <img
-                                    src="../../img/features/feature-02.jpg"
-                                    alt="Feature"
-                                  />
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="../../img/features/feature-03.jpg"
-                                  data-fancybox="gallery"
-                                >
-                                  <img
-                                    src="../../img/features/feature-03.jpg"
-                                    alt="Feature"
-                                  />
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="../../img/features/feature-04.jpg"
-                                  data-fancybox="gallery"
-                                >
-                                  <img
-                                    src="../../img/features/feature-04.jpg"
-                                    alt="Feature"
-                                  />
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                          <div className="clinic-services">
-                            <span>Dental Fillings</span>
-                            <span> Whitneing</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="doc-info-right">
-                        <div className="clini-infos">
-                          <ul>
-                            <li>
-                              <i className="far fa-thumbs-up" /> 97%
-                            </li>
-                            <li>
-                              <i className="far fa-comment" /> 4 Feedback
-                            </li>
-                            <li>
-                              <i className="fas fa-map-marker-alt" /> Newyork, USA
-                            </li>
-                            <li>
-                              <i className="far fa-money-bill-alt" /> $150 - $250{" "}
-                              <i
-                                className="fas fa-info-circle"
-                                data-toggle="tooltip"
-                                title="Lorem Ipsum"
-                              />
-                            </li>
-                          </ul>
-                        </div>
-                        <div className="clinic-booking">
-                          <a className="view-pro-btn" href="/patient/doctor-profile">
-                            View Profile
-                          </a>
-                          <a className="apt-btn" href="/patient/booking">
-                            Book Appointment
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+
                 {/* /Doctor Widget */}
                 {/* Doctor Widget */}
-                <div className="card">
-                  <div className="card-body">
-                    <div className="doctor-widget">
-                      <div className="doc-info-left">
-                        <div className="doctor-img">
-                          <a href="/patient/doctor-profile">
-                            <img
-                              src="../../img/doctors/doctor-thumb-06.jpg"
-                              className="img-fluid"
-                              alt="User Image"
-                            />
-                          </a>
-                        </div>
-                        <div className="doc-info-cont">
-                          <h4 className="doc-name">
-                            <a href="/patient/doctor-profile">Dr. Katharine Berthold</a>
-                          </h4>
-                          <p className="doc-speciality">
-                            MS - Orthopaedics, MBBS, M.Ch - Orthopaedics
-                          </p>
-                          <p className="doc-department">
-                            <img
-                              src="../../img/specialities/specialities-03.png"
-                              className="img-fluid"
-                              alt="Speciality"
-                            />
-                            Orthopaedics
-                          </p>
-                          <div className="rating">
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star" />
-                            <span className="d-inline-block average-rating">
-                              (52)
-                            </span>
-                          </div>
-                          <div className="clinic-details">
-                            <p className="doc-location">
-                              <i className="fas fa-map-marker-alt" /> Texas, USA
-                            </p>
-                            <ul className="clinic-gallery">
-                              <li>
-                                <a
-                                  href="../../img/features/feature-01.jpg"
-                                  data-fancybox="gallery"
-                                >
-                                  <img
-                                    src="../../img/features/feature-01.jpg"
-                                    alt="Feature"
-                                  />
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="../../img/features/feature-02.jpg"
-                                  data-fancybox="gallery"
-                                >
-                                  <img
-                                    src="../../img/features/feature-02.jpg"
-                                    alt="Feature"
-                                  />
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="../../img/features/feature-03.jpg"
-                                  data-fancybox="gallery"
-                                >
-                                  <img
-                                    src="../../img/features/feature-03.jpg"
-                                    alt="Feature"
-                                  />
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="../../img/features/feature-04.jpg"
-                                  data-fancybox="gallery"
-                                >
-                                  <img
-                                    src="../../img/features/feature-04.jpg"
-                                    alt="Feature"
-                                  />
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                          <div className="clinic-services">
-                            <span>Dental Fillings</span>
-                            <span> Whitneing</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="doc-info-right">
-                        <div className="clini-infos">
-                          <ul>
-                            <li>
-                              <i className="far fa-thumbs-up" /> 100%
-                            </li>
-                            <li>
-                              <i className="far fa-comment" /> 52 Feedback
-                            </li>
-                            <li>
-                              <i className="fas fa-map-marker-alt" /> Texas, USA
-                            </li>
-                            <li>
-                              <i className="far fa-money-bill-alt" /> $100 - $500{" "}
-                              <i
-                                className="fas fa-info-circle"
-                                data-toggle="tooltip"
-                                title="Lorem Ipsum"
-                              />
-                            </li>
-                          </ul>
-                        </div>
-                        <div className="clinic-booking">
-                          <a className="view-pro-btn" href="/patient/doctor-profile">
-                            View Profile
-                          </a>
-                          <a className="apt-btn" href="/patient/booking">
-                            Book Appointment
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+
                 {/* /Doctor Widget */}
                 <div className="load-more text-center">
                   <a className="btn btn-primary btn-sm" href="javascript:void(0);">
