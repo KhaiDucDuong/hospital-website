@@ -10,7 +10,7 @@ import SearchingDoctor from "./pages/patient/SearchingDoctor";
 import DoctorProfile from "./pages/patient/DoctorProfile";
 import PatientProfile from "./pages/patient/PatientProfile";
 import PatientSettings from "./pages/patient/PatientSettings";
-
+import Admin from "./pages/admin";
 
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
           <Route path='/patient/doctor-profile' element={<DoctorProfile/>}></Route>
           <Route path='/patient/profile' element={<PatientProfile/>}></Route>
           <Route path='/patient/settings' element={<PatientSettings/>}></Route> 
-          {/* <Route path='/admin' element={<AdminHome/>}></Route>*/}
+          <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<Homepage />} />
         </Routes>
       </BrowserRouter>
