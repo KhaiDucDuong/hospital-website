@@ -4,10 +4,10 @@ import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 
 function SearchingDoctor() {
+  const doctorID = 123;
   return (
     <>
       <Header/>
-
       <Breadcrumb/>
 
         {/* Page Content */}
@@ -254,7 +254,7 @@ function SearchingDoctor() {
                         </div>
                         <div className="doc-info-cont">
                           <h4 className="doc-name">
-                            <a href="/patient/doctor-profile">Dr. Darren Elder</a>
+                          <a href={`/patient/doctor-profile/${doctorID}`}>Tiến gié</a>
                           </h4>
                           <p className="doc-speciality">
                             BDS, MDS - Oral &amp; Maxillofacial Surgery
@@ -357,7 +357,7 @@ function SearchingDoctor() {
                           </ul>
                         </div>
                         <div className="clinic-booking">
-                          <a className="view-pro-btn" href="/patient/doctor-profile">
+                          <a className="view-pro-btn" href={`/patient/doctor-profile/${doctorID}`}>
                             View Profile
                           </a>
                           <a className="apt-btn" href="/patient/booking">
