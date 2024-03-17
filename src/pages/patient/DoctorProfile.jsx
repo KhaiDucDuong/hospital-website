@@ -1,8 +1,24 @@
 import React from 'react'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
+import ReactDOM from 'react-dom';
+
+const doctorData = {  
+    Doctorprofile: 
+   {
+    doctor_id : 123,
+    Gender : 1,
+    Name : 'Tiến gié',
+    DOB : '1989-12-12',
+        phone_number : 84848484,
+        Department : 'Bệnh viện dã chiến Bình Dương',
+        Description : 'Tôi là bác sĩ chuyên trị bệnh xạo lồn với 25 năm kinh nghiệm',
+        Specialize : 'Dentist',
+       }
+    }
 
 const DoctorProfile = () => {
+
   return (
     <>
         <Header/>
@@ -22,9 +38,18 @@ const DoctorProfile = () => {
                         />
                     </div>
                     <div className="doc-info-cont">
-                        <h4 className="doc-name">Dr. Darren Elder</h4>
+                        <h4 className="doc-name">{doctorData.Doctorprofile.Name}</h4>
                         <p className="doc-speciality">
-                        BDS, MDS - Oral &amp; Maxillofacial Surgery
+                        Date of Birth: {doctorData.Doctorprofile.DOB}
+                        </p>
+                        <p className="doc-speciality">
+                        Phone number: {doctorData.Doctorprofile.phone_number}
+                        </p>
+                        <p className="doc-speciality">
+                        Gender: {doctorData.Doctorprofile.Gender}
+                        </p>
+                        <p className="doc-speciality">
+                        Specialize: {doctorData.Doctorprofile.Specialize}
                         </p>
                         <p className="doc-department">
                         <img
@@ -32,7 +57,7 @@ const DoctorProfile = () => {
                             className="img-fluid"
                             alt="Speciality"
                         />
-                        Dentist
+                        {doctorData.Doctorprofile.Department}
                         </p>
                         <div className="rating">
                         <i className="fas fa-star filled" />
@@ -202,14 +227,7 @@ const DoctorProfile = () => {
                         <div className="widget about-widget">
                             <h4 className="widget-title">About Me</h4>
                             <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                            sed do eiusmod tempor incididunt ut labore et dolore magna
-                            aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                            ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                            Duis aute irure dolor in reprehenderit in voluptate velit
-                            esse cillum dolore eu fugiat nulla pariatur. Excepteur
-                            sint occaecat cupidatat non proident, sunt in culpa qui
-                            officia deserunt mollit anim id est laborum.
+                        {doctorData.Doctorprofile.Description}
                             </p>
                         </div>
                         {/* /About Details */}
