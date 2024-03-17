@@ -1,0 +1,9 @@
+.sidebar-items:hover {
+    cursor: pointer;
+    transition: 0.5;
+    color: #0de0fe;
+}
+
+.active {
+    background-color: #0de0fe;
+}
