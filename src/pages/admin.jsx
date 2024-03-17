@@ -1,9 +1,9 @@
-import "../assets/css/bootstrap.min.css";
-import "../assets/css/font-awesome.min.css";
-import "../assets/css/feathericon.min.css";
-import "../assets/css/style.css";
-import "../assets/plugins/morris/morris.css";
-import "../assets/plugins/datatables/datatables.min.css";
+import "../assets/admin/assets/css/bootstrap.min.css";
+import "../assets/admin/assets/css/font-awesome.min.css";
+import "../assets/admin/assets/css/feathericon.min.css";
+import "../assets/admin/assets/css/style.css";
+import "../assets/admin/assets/plugins/morris/morris.css";
+import "../assets/admin/assets/plugins/datatables/datatables.min.css";
 import Header from "../components/admin/header";
 import SlideBar from "../components/admin/slideBar";
 import Dashboard from "../components/admin/dashboard/dashboard";
