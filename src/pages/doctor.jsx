@@ -11,6 +11,7 @@ import "../assets/plugins/fontawesome/css/fontawesome.min.css";
 import "../assets/plugins/fontawesome/css/all.min.css";
 import "../assets/css/style.css";
 import "../components/doctor/app.css";
+import { DOCTOR } from "./doctorData";
 
 const Appointments = lazy(() =>
   import("../components/doctor/Appointments/appointments")
@@ -21,8 +22,8 @@ const ScheduleTiming = lazy(() =>
 );
 
 export default function Doctor() {
+  const doctor = DOCTOR;
   const [selectedWidget, setSelectedWidget] = useState("dashboard");
-
   return (
     <>
       {/* Main Wrapper */}
@@ -39,6 +40,7 @@ export default function Doctor() {
                 <ProfileSidebar
                   selectedWidget={selectedWidget}
                   setSelectedWidget={setSelectedWidget}
+                  doctor={doctor}
                 />
               </div>
               <div className="col-md-7 col-lg-8 col-xl-9">
