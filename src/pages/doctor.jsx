@@ -22,8 +22,20 @@ const ScheduleTiming = lazy(() =>
 );
 
 export default function Doctor() {
-  const doctor = DOCTOR; 
+  const doctor = DOCTOR;
   const [selectedWidget, setSelectedWidget] = useState("dashboard");
+  let today_date = new Date().toDateString();
+  today_date = new Date(today_date)
+
+  const today_appointments = DOCTOR.appointments.filter(
+    (appointment) => new Date(appointment.date).getTime() == today_date.getTime()
+  );
+  const upcoming_appointments = DOCTOR.appointments.filter(
+    (appointment) => new Date(appointment.date).getTime() > today_date.getTime()
+  );
+  const previous_appointments = DOCTOR.appointments.filter(
+    (appointment) => new Date(appointment.date).getTime() < today_date.getTime()
+  );
   return (
     <>
       {/* Main Wrapper */}
@@ -57,10 +69,16 @@ export default function Doctor() {
                       {selectedWidget == "dashboard" && (
                         <>
                           <h4 className="mb-4">Patient Appoinment</h4>{" "}
-                          <AppointmentTab />
+                          <AppointmentTab
+                            upcoming_appointments={upcoming_appointments}
+                            today_appointments={today_appointments}
+                            previous_appointments={previous_appointments}
+                          />
                         </>
                       )}
-                      {selectedWidget == "appointments" && <Appointments appointments={doctor.appointments}/>}
+                      {selectedWidget == "appointments" && (
+                        <Appointments appointments={doctor.appointments} />
+                      )}
                       {selectedWidget == "scheduleTiming" && <ScheduleTiming />}
                     </Suspense>
                   </div>

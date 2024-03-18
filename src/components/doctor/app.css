@@ -3,3 +3,7 @@
     transition: 0.5;
     color: #0de0fe;
 }
+
+.appoint-tab:hover {
+    cursor: pointer;
+}
