@@ -22,7 +22,7 @@ const ScheduleTiming = lazy(() =>
 );
 
 export default function Doctor() {
-  const doctor = DOCTOR;
+  const doctor = DOCTOR; 
   const [selectedWidget, setSelectedWidget] = useState("dashboard");
   return (
     <>
@@ -60,7 +60,7 @@ export default function Doctor() {
                           <AppointmentTab />
                         </>
                       )}
-                      {selectedWidget == "appointments" && <Appointments />}
+                      {selectedWidget == "appointments" && <Appointments appointments={doctor.appointments}/>}
                       {selectedWidget == "scheduleTiming" && <ScheduleTiming />}
                     </Suspense>
                   </div>

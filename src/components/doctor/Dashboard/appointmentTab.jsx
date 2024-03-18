@@ -2,7 +2,7 @@ import TodayTab from "./todayTab";
 import UpcomingTab from "./upcomingTab";
 import { useState } from "react";
 
-export default function AppointmentTab() {
+export default function AppointmentTab({appointments}) {
   const [selectedTab, setSelectedTab] = useState("upcoming");
 
   function changeTabButtonOnClick(newSelectedTab) {

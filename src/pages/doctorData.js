@@ -8,7 +8,7 @@ export const DOCTOR = {
   phone_number: "phone_number",
   appointments: [
     {
-      appointment_id: "appointmentid",
+      appointment_id: "appointmentid1",
       date: "date",
       Day_of_week: "day_of_week",
       patient_name: "patient_name",
@@ -17,7 +17,7 @@ export const DOCTOR = {
       status: "status",
     },
     {
-      appointment_id: "appointmentid",
+      appointment_id: "appointmentid2",
       date: "date",
       Day_of_week: "day_of_week",
       patient_name: "patient_name",
@@ -26,7 +26,7 @@ export const DOCTOR = {
       status: "status",
     },
     {
-      appointment_id: "appointmentid",
+      appointment_id: "appointmentid3",
       date: "date",
       Day_of_week: "day_of_week",
       patient_name: "patient_name",
@@ -35,7 +35,7 @@ export const DOCTOR = {
       status: "status",
     },
     {
-      appointment_id: "appointmentid",
+      appointment_id: "appointmentid4",
       date: "date",
       Day_of_week: "day_of_week",
       patient_name: "patient_name",
