@@ -11,6 +11,7 @@ import "../assets/plugins/fontawesome/css/fontawesome.min.css";
 import "../assets/plugins/fontawesome/css/all.min.css";
 import "../assets/css/style.css";
 import "../components/doctor/app.css";
+import { DOCTOR } from "./doctorData";
 
 const Appointments = lazy(() =>
   import("../components/doctor/Appointments/appointments")
@@ -21,8 +22,20 @@ const ScheduleTiming = lazy(() =>
 );
 
 export default function Doctor() {
+  const doctor = DOCTOR;
   const [selectedWidget, setSelectedWidget] = useState("dashboard");
+  let today_date = new Date().toDateString();
+  today_date = new Date(today_date)
 
+  const today_appointments = DOCTOR.appointments.filter(
+    (appointment) => new Date(appointment.date).getTime() == today_date.getTime()
+  );
+  const upcoming_appointments = DOCTOR.appointments.filter(
+    (appointment) => new Date(appointment.date).getTime() > today_date.getTime()
+  );
+  const previous_appointments = DOCTOR.appointments.filter(
+    (appointment) => new Date(appointment.date).getTime() < today_date.getTime()
+  );
   return (
     <>
       {/* Main Wrapper */}
@@ -39,6 +52,7 @@ export default function Doctor() {
                 <ProfileSidebar
                   selectedWidget={selectedWidget}
                   setSelectedWidget={setSelectedWidget}
+                  doctor={doctor}
                 />
               </div>
               <div className="col-md-7 col-lg-8 col-xl-9">
@@ -55,10 +69,16 @@ export default function Doctor() {
                       {selectedWidget == "dashboard" && (
                         <>
                           <h4 className="mb-4">Patient Appoinment</h4>{" "}
-                          <AppointmentTab />
+                          <AppointmentTab
+                            upcoming_appointments={upcoming_appointments}
+                            today_appointments={today_appointments}
+                            previous_appointments={previous_appointments}
+                          />
                         </>
                       )}
-                      {selectedWidget == "appointments" && <Appointments />}
+                      {selectedWidget == "appointments" && (
+                        <Appointments appointments={doctor.appointments} />
+                      )}
                       {selectedWidget == "scheduleTiming" && <ScheduleTiming />}
                     </Suspense>
                   </div>

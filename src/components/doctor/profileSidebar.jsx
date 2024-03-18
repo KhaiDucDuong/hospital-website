@@ -1,5 +1,5 @@
 
-export default function ProfileSidebar({selectedWidget, setSelectedWidget}) {
+export default function ProfileSidebar({selectedWidget, setSelectedWidget, doctor}) {
   return (
     <div className="profile-sidebar">
       <div className="widget-profile pro-widget-content">
@@ -8,10 +8,10 @@ export default function ProfileSidebar({selectedWidget, setSelectedWidget}) {
             <img src="../../img/doctors/doctor-thumb-02.jpg" alt="User Image" />
           </a>
           <div className="profile-det-info">
-            <h3>Dr. Darren Elder</h3>
+            <h3>{doctor.fullname}</h3>
             <div className="patient-details">
               <h5 className="mb-0">
-                BDS, MDS - Oral &amp; Maxillofacial Surgery
+                {doctor.department_name}
               </h5>
             </div>
           </div>
