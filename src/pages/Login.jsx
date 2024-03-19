@@ -8,7 +8,7 @@ function Login() {
             <Header/>
 
             {/* Page Content */}
-            <div className="content" style={{height:"90vh", padding:"125px"}}>
+            <div className="content" style={{ padding:"125px"}}>
                 <div className="container-fluid">
                 <div className="row">
                     <div className="col-md-8 offset-md-2">

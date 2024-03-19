@@ -97,32 +97,6 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-12 col-lg-6">
-            {/* Sales Chart */}
-            <div className="card card-chart">
-              <div className="card-header">
-                <h4 className="card-title">Revenue</h4>
-              </div>
-              <div className="card-body">
-                <div id="morrisArea" />
-              </div>
-            </div>
-            {/* /Sales Chart */}
-          </div>
-          <div className="col-md-12 col-lg-6">
-            {/* Invoice Chart */}
-            <div className="card card-chart">
-              <div className="card-header">
-                <h4 className="card-title">Status</h4>
-              </div>
-              <div className="card-body">
-                <div id="morrisLine" />
-              </div>
-            </div>
-            {/* /Invoice Chart */}
-          </div>
-        </div>
-        <div className="row">
           <div className="col-md-6 d-flex">
             {/* Recent Orders */}
             <div className="card card-table flex-fill">
@@ -137,7 +111,6 @@ export default function Dashboard() {
                         <th>Doctor Name</th>
                         <th>Speciality</th>
                         <th>Earned</th>
-                        <th>Reviews</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -159,13 +132,6 @@ export default function Dashboard() {
                         </td>
                         <td>Dental</td>
                         <td>$3200.00</td>
-                        <td>
-                          <i className="fe fe-star text-warning" />
-                          <i className="fe fe-star text-warning" />
-                          <i className="fe fe-star text-warning" />
-                          <i className="fe fe-star text-warning" />
-                          <i className="fe fe-star-o text-secondary" />
-                        </td>
                       </tr>
                       <tr>
                         <td>
@@ -185,13 +151,6 @@ export default function Dashboard() {
                         </td>
                         <td>Dental</td>
                         <td>$3100.00</td>
-                        <td>
-                          <i className="fe fe-star text-warning" />
-                          <i className="fe fe-star text-warning" />
-                          <i className="fe fe-star text-warning" />
-                          <i className="fe fe-star text-warning" />
-                          <i className="fe fe-star-o text-secondary" />
-                        </td>
                       </tr>
                       <tr>
                         <td>
@@ -211,13 +170,6 @@ export default function Dashboard() {
                         </td>
                         <td>Cardiology</td>
                         <td>$4000.00</td>
-                        <td>
-                          <i className="fe fe-star text-warning" />
-                          <i className="fe fe-star text-warning" />
-                          <i className="fe fe-star text-warning" />
-                          <i className="fe fe-star text-warning" />
-                          <i className="fe fe-star-o text-secondary" />
-                        </td>
                       </tr>
                       <tr>
                         <td>
@@ -237,13 +189,6 @@ export default function Dashboard() {
                         </td>
                         <td>Urology</td>
                         <td>$3200.00</td>
-                        <td>
-                          <i className="fe fe-star text-warning" />
-                          <i className="fe fe-star text-warning" />
-                          <i className="fe fe-star text-warning" />
-                          <i className="fe fe-star text-warning" />
-                          <i className="fe fe-star-o text-secondary" />
-                        </td>
                       </tr>
                       <tr>
                         <td>
@@ -263,13 +208,6 @@ export default function Dashboard() {
                         </td>
                         <td>Orthopaedics</td>
                         <td>$3500.00</td>
-                        <td>
-                          <i className="fe fe-star text-warning" />
-                          <i className="fe fe-star text-warning" />
-                          <i className="fe fe-star text-warning" />
-                          <i className="fe fe-star text-warning" />
-                          <i className="fe fe-star-o text-secondary" />
-                        </td>
                       </tr>
                     </tbody>
                   </table>

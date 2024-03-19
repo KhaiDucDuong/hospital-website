@@ -9,7 +9,7 @@ function Register() {
       <Header />
 
       {/* Page Content */}
-      <div className="content" style={{height:'90vh', padding:"125px"}}>
+      <div className="content" style={{ padding:"125px"}}>
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-8 offset-md-2">
@@ -29,15 +29,31 @@ function Register() {
                     <form action="https://dreamguys.co.in/demo/doccure/doctor-dashboard.html">
                       <div className="form-group form-focus">
                         <input type="text" className="form-control floating" />
-                        <label className="focus-label">Name</label>
+                        <label className="focus-label">Full Name</label>
                       </div>
                       <div className="form-group form-focus">
                         <input type="text" className="form-control floating" />
-                        <label className="focus-label">Mobile Number</label>
+                        <label className="focus-label">Phone Number</label>
+                      </div>
+                      <div className="form-group form-focus">
+                        <input type="text" className="form-control floating" />
+                        <label className="focus-label">Email</label>
+                      </div>
+                      <div className="form-group form-focus">
+                        <input type="text" className="form-control floating" />
+                        <label className="focus-label">Date Of Birth</label>
+                      </div>
+                      <div className="form-group form-focus">
+                        <input type="text" className="form-control floating" />
+                        <label className="focus-label">Gender</label>
+                      </div>
+                      <div className="form-group form-focus">
+                        <input type="text" className="form-control floating" />
+                        <label className="focus-label">Username</label>
                       </div>
                       <div className="form-group form-focus">
                         <input type="password" className="form-control floating" />
-                        <label className="focus-label">Create Password</label>
+                        <label className="focus-label">Password</label>
                       </div>
                       <div className="text-right">
                         <a className="forgot-link" href="/login">

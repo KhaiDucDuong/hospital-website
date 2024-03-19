@@ -1,6 +1,6 @@
 import DashboardAppointment from "./dashboardAppointment";
 
-export default function TodayTab({today_appointments}) {
+export default function PreviousTab({previous_appointments}) {
   return (
     <div className="tab-pane show active" id="today-appointments">
       <div className="card card-table mb-0">
@@ -18,7 +18,7 @@ export default function TodayTab({today_appointments}) {
                 </tr>
               </thead>
               <tbody>
-                {today_appointments.map((appointment) => (<DashboardAppointment appointment={appointment}/>))}
+                {previous_appointments.map((appointment) => (<DashboardAppointment appointment={appointment} disableBtn={true}/>))}
               </tbody>
             </table>
           </div>

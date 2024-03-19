@@ -1,7 +1,4 @@
-import { Link } from "react-router-dom";
-import AddDepartments from "./AddDepartments";
-
-export default function Departments() {
+export default function Departments({ selectedWidget, setSelectedWidget }) {
   return (
     <div className="page-wrapper">
       <div className="content container-fluid">
@@ -18,12 +15,17 @@ export default function Departments() {
               </ul>
             </div>
             <div className="col-sm-5 col">
-              <Link
-                to="/add-department"
-                className="btn btn-primary float-right mt-2"
+              <a
+                href="#add_department"
+                data-toggle="modal"
+                className={
+                  "btn btn-primary float-right mt-2" +
+                  (selectedWidget === "addDepartments" && "active")
+                }
+                onClick={() => setSelectedWidget("addDepartments")}
               >
                 Add
-              </Link>
+              </a>
             </div>
           </div>
         </div>
@@ -59,7 +61,16 @@ export default function Departments() {
                         <td className="text-right">
                           <div className="actions">
                             <a
-                              className="btn btn-sm bg-success-light"
+                              href="#edit"
+                              className={
+                                "btn btn-sm bg-success-light " +
+                                (selectedWidget === "editDepartments"
+                                  && "active"
+                                )
+                              }
+                              onClick={() => {
+                                setSelectedWidget("editDepartments");
+                              }}
                               data-toggle="modal"
                             >
                               <i className="fe fe-pencil" /> Edit
