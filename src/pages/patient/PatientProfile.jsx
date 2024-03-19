@@ -1,12 +1,29 @@
 import React from 'react'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
+import { useEffect, useState } from "react";
 
 const PatientProfile = () => {
+    const [patient, setPatient] = useState("");
+    const id = "65f2b14815ed8c69fd28adc6";
+    useEffect(() => {
+        const url = "http://localhost:8080/patients/patient_" + id;
+
+        const fetchData = async () => {
+            try {
+                const response = await fetch(url, {method: 'GET' });
+                const data = await response.json();
+                setPatient(data)
+            } catch (error) {
+                console.log("error", error);
+            }
+        };
+        fetchData();
+    }, []);
+    const genderString = patient.gender ? 'Male' : 'Female';
   return (
     <>
         <Header/>
-        
         <>
             <div className="content" style={{padding: '100px 0'}}>
                 <div className="container-fluid">
@@ -24,14 +41,13 @@ const PatientProfile = () => {
                                 />
                             </a>
                             <div className="profile-det-info">
-                                <h3>Richard Wilson</h3>
+                                <h3>{patient.fullname}</h3>
                                 <div className="patient-details">
                                 <h5>
-                                    <b>Patient ID :</b> PT0016
+                                    <b>Patient ID : {patient._id}</b>
                                 </h5>
                                 <h5 className="mb-0">
-                                    <i className="fas fa-map-marker-alt" /> Newyork, United
-                                    States
+                                    <i className="fas fa-map-marker-alt" />Gender : {genderString}
                                 </h5>
                                 </div>
                             </div>
@@ -40,10 +56,10 @@ const PatientProfile = () => {
                         <div className="patient-info">
                             <ul>
                             <li>
-                                Phone <span>+1 952 001 8563</span>
+                                Phone <span>{patient.phoneNumber}</span>
                             </li>
                             <li>
-                                Age <span>38 Years, Male</span>
+                                Date of Birth <span>{patient.dateOfbirth}</span>
                             </li>
                             <li>
                                 Blood Group <span>AB+</span>
