@@ -7,3 +7,7 @@
 .appoint-tab:hover {
     cursor: pointer;
 }
+
+.schedule-tab-item:hover {
+    cursor: pointer;
+}
