@@ -1,15 +1,42 @@
-import React from 'react'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import React, { useState } from "react";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 function Register() {
+  const url = "http://localhost:8080/authentications/signup";
+  const [fullName, setFullName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [gender, setGender] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  function signUpBtnOnClick() {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        fullname: fullName,
+        phoneNumber: phoneNumber,
+        email: email,
+        dateOfbirth: dateOfBirth,
+        gender: gender,
+        loginName: username,
+        password: password,
+      }),
+    };
+    fetch(url, requestOptions)
+      .then((response) => response.json())
+      .then((data) => this.setState({ postId: data.id }));
+  }
+
   return (
     <>
-
       <Header />
 
       {/* Page Content */}
-      <div className="content" style={{ padding:"125px"}}>
+      <div className="content" style={{ padding: "125px" }}>
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-8 offset-md-2">
@@ -26,33 +53,68 @@ function Register() {
                   <div className="col-md-12 col-lg-6 login-right">
                     <h4>Register</h4>
                     {/* Register Form */}
-                    <form action="https://dreamguys.co.in/demo/doccure/doctor-dashboard.html">
+                    <form>
                       <div className="form-group form-focus">
-                        <input type="text" className="form-control floating" />
+                        <input
+                          id="fullNameInput"
+                          type="text"
+                          className="form-control floating"
+                          onChange={(e) => setFullName(e.target.value)}
+                        />
                         <label className="focus-label">Full Name</label>
                       </div>
                       <div className="form-group form-focus">
-                        <input type="text" className="form-control floating" />
+                        <input
+                          id="phoneNumberInput"
+                          type="text"
+                          className="form-control floating"
+                          onChange={(e) => setPhoneNumber(e.target.value)}
+                        />
                         <label className="focus-label">Phone Number</label>
                       </div>
                       <div className="form-group form-focus">
-                        <input type="text" className="form-control floating" />
+                        <input
+                          id="emailInput"
+                          type="text"
+                          className="form-control floating"
+                          onChange={(e) => setEmail(e.target.value)}
+                        />
                         <label className="focus-label">Email</label>
                       </div>
                       <div className="form-group form-focus">
-                        <input type="text" className="form-control floating" />
+                        <input
+                          id="dateOfBirthInput"
+                          type="text"
+                          className="form-control floating"
+                          onChange={(e) => setDateOfBirth(e.target.value)}
+                        />
                         <label className="focus-label">Date Of Birth</label>
                       </div>
                       <div className="form-group form-focus">
-                        <input type="text" className="form-control floating" />
+                        <input
+                          id="genderInput"
+                          type="text"
+                          className="form-control floating"
+                          onChange={(e) => setGender(e.target.value)}
+                        />
                         <label className="focus-label">Gender</label>
                       </div>
                       <div className="form-group form-focus">
-                        <input type="text" className="form-control floating" />
+                        <input
+                          id="usernameInput"
+                          type="text"
+                          className="form-control floating"
+                          onChange={(e) => setUsername(e.target.value)}
+                        />
                         <label className="focus-label">Username</label>
                       </div>
                       <div className="form-group form-focus">
-                        <input type="password" className="form-control floating" />
+                        <input
+                          id="passwordInput"
+                          type="password"
+                          className="form-control floating"
+                          onChange={(e) => setPassword(e.target.value)}
+                        />
                         <label className="focus-label">Password</label>
                       </div>
                       <div className="text-right">
@@ -63,6 +125,7 @@ function Register() {
                       <button
                         className="btn btn-primary btn-block btn-lg login-btn"
                         type="submit"
+                        onClick={() => signUpBtnOnClick()}
                       >
                         Signup
                       </button>
@@ -94,10 +157,9 @@ function Register() {
       </div>
       {/* /Page Content */}
 
-      <Footer/>
+      <Footer />
     </>
-
-  )
+  );
 }
 
-export default Register
+export default Register;
