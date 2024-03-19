@@ -5,15 +5,14 @@ import { useEffect, useState } from "react";
 
 const PatientProfile = () => {
     const [patient, setPatient] = useState("");
-    const id = "65f2b14815ed8c69fd28adc6";
-    useEffect(() => {
-        const url = "http://localhost:8080/patients/patient_" + id;
 
+    useEffect(() => {
+        const url = "http://localhost:8080/patients/info";
         const fetchData = async () => {
             try {
-                const response = await fetch(url, {method: 'GET' });
+                const response = await fetch(url, {Header: "GET", credentials: "include"});
                 const data = await response.json();
-                setPatient(data)
+                console.log(data);
             } catch (error) {
                 console.log("error", error);
             }

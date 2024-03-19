@@ -2,14 +2,17 @@ import React, { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
+
 function Login() {
   const url = "http://localhost:8080/authentications/signIn";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [jsessionId, setJsessionId] = useState("")
 
   function signInBtnOnClick() {
     const requestOptions = {
       method: "POST",
+      credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         loginName: username,
@@ -17,9 +20,16 @@ function Login() {
       }),
     };
     fetch(url, requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
+      .then((response) => {
+        if(response.status === 200) {
+            return Promise.all([response.json(), response.headers]);
+        }
+        else {
+            return Promise.reject("Login failed");
+        }
+      }).then(([body, headers]) => {
+        console.log(body)
+        console.log(headers)
       });
   }
 
@@ -48,6 +58,7 @@ function Login() {
                         Login <span>Doccure</span>
                       </h3>
                     </div>
+                    {/* <form> */}
                       <div className="form-group row">
                         <label className="col-sm-3 col-form-label">
                           Username
@@ -103,6 +114,7 @@ function Login() {
                       <div className="text-center dont-have">
                         Don’t have an account? <a href="/register">Register</a>
                       </div>
+                    {/* </form> */}
                   </div>
                 </div>
               </div>
