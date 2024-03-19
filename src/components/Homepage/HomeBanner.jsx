@@ -14,29 +14,30 @@ function HomeBanner() {
                 </p>
                 </div>
                 {/* Search */}
-                <div className="search-box">
-                <form action="templateshub.net">
+                <div className="search-box" style={{ display: 'flex' }}>
+                <form action="doctor/search">
                     <div className="form-group search-location">
                     <input
+                        name ='doctor'
                         type="text"
                         className="form-control"
-                        placeholder="Search Location"
+                        placeholder="Search Doctor"
                     />
-                    <span className="form-text">Based on your Location</span>
+                    <span className="form-text">Search for Doctor</span>
                     </div>
+                    </form>
+                    <form action="department/search">
                     <div className="form-group search-info">
                     <input
+                        name ='department'
                         type="text"
                         className="form-control"
-                        placeholder="Search Doctors, Clinics, Hospitals, Diseases Etc"
+                        placeholder="Search Hospitals"
                     />
                     <span className="form-text">
                         Ex : Dental or Sugar Check up etc
                     </span>
                     </div>
-                    <button type="submit" className="btn btn-primary search-btn">
-                    <i className="fas fa-search" /> <span>Search</span>
-                    </button>
                 </form>
                 </div>
                 {/* /Search */}

@@ -5,18 +5,18 @@ import Footer from '../../components/Footer'
 import { useEffect, useState } from "react";
 
 
-function SearchingDoctor() {
-  let [doctor, setDoctor] = useState("");
-  let [doctorresult, setDoctorresult] = useState([]);
+function SearchingDepartment() {
+  let [department, setApartment] = useState("");
+  let [departmentresult, setApartmentresult] = useState([]);
   let queryParameters = new URLSearchParams(window.location.search)
-  doctor = queryParameters.get("doctor")
+  department = queryParameters.get("department")
     useEffect(() => {
-        let url = `http://localhost:8080/doctors/search/${doctor}`;
+        let url = `http://localhost:8080/departments/search/${department}`;
         let fetchData = async () => {
             try {
                 let response = await fetch(url, {method: 'GET' });
                 let data = await response.json();
-                setDoctorresult(data);
+                setApartmentresult(data);
             } catch (error) {
                 console.log("error", error);
             }
@@ -24,11 +24,10 @@ function SearchingDoctor() {
 
         fetchData();
     }, []);
-    const length = doctorresult.length;
   return (
     <>
       <Header/>
-      <Breadcrumb data={length}/>
+      <Breadcrumb data={department}/>
 
         {/* Page Content */}
         <div className="content">
@@ -51,7 +50,7 @@ function SearchingDoctor() {
                       </div>
                     </div>
                     <div className="filter-widget">
-                      <h4>Gender</h4>
+                      <h4>Size</h4>
                       <div>
                         <label className="custom_check">
                           <input
@@ -59,13 +58,13 @@ function SearchingDoctor() {
                             name="gender_type"
                             defaultChecked=""
                           />
-                          <span className="checkmark" /> Male Doctor
+                          <span className="checkmark" /> Big Department
                         </label>
                       </div>
                       <div>
                         <label className="custom_check">
                           <input type="checkbox" name="gender_type" />
-                          <span className="checkmark" /> Female Doctor
+                          <span className="checkmark" /> Small Department
                         </label>
                       </div>
                     </div>
@@ -128,7 +127,7 @@ function SearchingDoctor() {
 
               <div className="col-md-12 col-lg-8 col-xl-9">
                 {/* Doctor Widget */}
-                {doctorresult.map((doctor,index) => (
+                {departmentresult.map((dere,index) => (
                 <div className="card">
                   <div className="card-body">
                     <div className="doctor-widget">
@@ -144,10 +143,10 @@ function SearchingDoctor() {
                         </div>
                         <div className="doc-info-cont">
                           <h4 className="doc-name" >
-                            <a href="/patient/doctor-profile">{doctor.fullname}</a>
+                            <a href="/patient/doctor-profile">{dere.departmentName}</a>
                           </h4>
                           <p className="doc-speciality">
-                            Bệnh Viện dã chiến HCMUTêÊ
+                            Hệ thống y tế toàn quốc.
                           </p>
                           <h5 className="doc-department">
                             <img
@@ -155,7 +154,7 @@ function SearchingDoctor() {
                               className="img-fluid"
                               alt="Speciality" key={index}
                             />
-                            Specialize: {doctor.specialize}
+                            Location: {dere.location}
                           </h5>
                           <div className="rating">
                             <i className="fas fa-star filled" />
@@ -248,10 +247,7 @@ function SearchingDoctor() {
                         </div>
                         <div className="clinic-booking">
                           <a className="view-pro-btn" href="/patient/doctor-profile">
-                            View Profile
-                          </a>
-                          <a className="apt-btn" href="/patient/booking">
-                            Book Appointment
+                            View Doctors
                           </a>
                         </div>
                       </div>
@@ -288,4 +284,4 @@ function SearchingDoctor() {
   )
 }
 
-export default SearchingDoctor
+export default SearchingDepartment
