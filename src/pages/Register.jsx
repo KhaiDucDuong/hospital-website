@@ -14,7 +14,6 @@ function Register() {
   const [password, setPassword] = useState("");
 
   function signUpBtnOnClick() {
-    console.log(gender);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -30,7 +29,9 @@ function Register() {
     };
     fetch(url, requestOptions)
       .then((response) => response.json())
-      .then((data) => this.setState({ postId: data.id }));
+      .then((data) => {
+        console.log(data)
+      });
   }
 
   return (
@@ -55,7 +56,6 @@ function Register() {
                   <div className="col-md-12 col-lg-6 login-right">
                     <h4>Register</h4>
                     {/* Register Form */}
-                    <form>
                     <div className="form-group row">
                         <label className="col-sm-3 col-form-label">
                           Full Name
@@ -177,7 +177,6 @@ function Register() {
                           </a>
                         </div>
                       </div>
-                    </form>
                     {/* /Register Form */}
                   </div>
                 </div>
