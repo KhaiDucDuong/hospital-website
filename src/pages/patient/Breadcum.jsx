@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Breadcrumb() {
+function Breadcrumb({data}) {
   return (
     <>
         {/* Breadcrumb */}
@@ -19,7 +19,7 @@ function Breadcrumb() {
                     </ol>
                 </nav>
                 <h2 className="breadcrumb-title">
-                    2245 matches found for : Dentist In Bangalore
+                    Search for: {data}
                 </h2>
                 </div>
                 <div className="col-md-4 col-12 d-md-block d-none">

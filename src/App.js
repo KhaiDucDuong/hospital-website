@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Booking from "./pages/patient/Booking";
 import SearchingDoctor from "./pages/patient/SearchingDoctor";
+import SearchingDepartment from "./pages/patient/SearchingDepartment";
 import DoctorProfile from "./pages/patient/DoctorProfile";
 import PatientProfile from "./pages/patient/PatientProfile";
 import PatientSettings from "./pages/patient/PatientSettings";
@@ -34,7 +35,8 @@ function App() {
           <Route path='/register' element={<Register/>}></Route>
           <Route path='/login' element={<Login/>}></Route>
           <Route path='/patient/booking' element={<Booking/>}></Route>
-          <Route path='/patient/search' element={<SearchingDoctor/> }></Route>
+          <Route path='/doctor/search' element={<SearchingDoctor/> }></Route>
+          <Route path='/department/search' element={<SearchingDepartment/> }></Route>
           <Route path='/patient/doctor-profile/:id' element={<DoctorProfile doctor={doctorData}/>}></Route>
           <Route path='/patient/profile' element={<PatientProfile/>}></Route>
           <Route path='/patient/settings' element={<PatientSettings/>}></Route> 
