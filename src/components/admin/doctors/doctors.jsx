@@ -1,4 +1,4 @@
-export default function Doctors() {
+export default function Doctors({ selectedWidget, setSelectedWidget }) {
   return (
     <div className="page-wrapper">
       <div className="content container-fluid">
@@ -15,18 +15,17 @@ export default function Doctors() {
               </ul>
             </div>
             <div className="col-sm-5 col">
-              {/* Di chuyển nút Add vào đây */}
               <a
                 href="#Add_Specialities_details"
                 data-toggle="modal"
-                className="btn btn-primary float-right mt-2"
+                className={"btn btn-primary float-right mt-2"+(selectedWidget === "addDoctors" && "active")}
+                onClick={() => setSelectedWidget("addDoctors")}
               >
                 Add
               </a>
             </div>
           </div>
         </div>
-        {/* /Page Header */}
         <div className="row">
           <div className="col-sm-12">
             <div className="card">
@@ -80,10 +79,10 @@ export default function Doctors() {
                           </div>
                         </td>
                         <td>
-                          {/* Nút edit */}
                           <a
                             href="#"
-                            className="btn btn-sm bg-success-light"
+                            className={"btn btn-sm bg-success-light " + (selectedWidget === "editDoctors" && "active")}
+                            onClick={()=>{setSelectedWidget("editDoctors")}}
                             data-toggle="modal"
                           >
                             <i className="fe fe-pencil" /> Edit
@@ -126,7 +125,6 @@ export default function Doctors() {
                           </div>
                         </td>
                         <td>
-                          {/* Nút edit */}
                           <a
                             href="#"
                             className="btn btn-sm bg-success-light"
@@ -172,7 +170,6 @@ export default function Doctors() {
                           </div>
                         </td>
                         <td>
-                          {/* Nút edit */}
                           <a
                             href="#"
                             className="btn btn-sm bg-success-light"
@@ -218,7 +215,6 @@ export default function Doctors() {
                           </div>
                         </td>
                         <td>
-                          {/* Nút edit */}
                           <a
                             href="#"
                             className="btn btn-sm bg-success-light"
@@ -264,7 +260,6 @@ export default function Doctors() {
                           </div>
                         </td>
                         <td>
-                          {/* Nút edit */}
                           <a
                             href="#"
                             className="btn btn-sm bg-success-light"
@@ -310,7 +305,6 @@ export default function Doctors() {
                           </div>
                         </td>
                         <td>
-                          {/* Nút edit */}
                           <a
                             href="#"
                             className="btn btn-sm bg-success-light"

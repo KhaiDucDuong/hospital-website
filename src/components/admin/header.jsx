@@ -168,9 +168,9 @@ export default function Header() {
             <span className="user-img">
               <img
                 className="rounded-circle"
-                src="../img/profiles/avatar-01.jpg"
+                src="../img/profiles/admin.jpeg"
                 width={31}
-                alt="Ryan Taylor"
+                alt="Admin"
               />
             </span>
           </a>
