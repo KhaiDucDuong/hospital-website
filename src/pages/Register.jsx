@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import moment from "moment";
 
 function Register() {
   const url = "http://localhost:8080/authentications/signup";
@@ -8,11 +9,12 @@ function Register() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("Male");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   function signUpBtnOnClick() {
+    console.log(gender);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -20,8 +22,8 @@ function Register() {
         fullname: fullName,
         phoneNumber: phoneNumber,
         email: email,
-        dateOfbirth: dateOfBirth,
-        gender: gender,
+        dateOfbirth: moment(new Date(dateOfBirth)).format('YYYY-MM-DD'),
+        gender: (gender === "Male" ? "true" : "false"),
         loginName: username,
         password: password,
       }),
@@ -54,68 +56,98 @@ function Register() {
                     <h4>Register</h4>
                     {/* Register Form */}
                     <form>
-                      <div className="form-group form-focus">
+                    <div className="form-group row">
+                        <label className="col-sm-3 col-form-label">
+                          Full Name
+                        </label>
+                        <div class="col-sm-9">
                         <input
                           id="fullNameInput"
                           type="text"
                           className="form-control floating"
                           onChange={(e) => setFullName(e.target.value)}
                         />
-                        <label className="focus-label">Full Name</label>
+                        </div>
                       </div>
-                      <div className="form-group form-focus">
+                      <div className="form-group row">
+                        <label className="col-sm-3 col-form-label">
+                          Phone Number
+                        </label>
+                        <div class="col-sm-9">
                         <input
                           id="phoneNumberInput"
                           type="text"
                           className="form-control floating"
                           onChange={(e) => setPhoneNumber(e.target.value)}
                         />
-                        <label className="focus-label">Phone Number</label>
+                        </div>
                       </div>
-                      <div className="form-group form-focus">
+                      <div className="form-group row">
+                        <label className="col-sm-3 col-form-label">
+                          Email
+                        </label>
+                        <div class="col-sm-9">
                         <input
                           id="emailInput"
-                          type="text"
+                          type="email"
                           className="form-control floating"
                           onChange={(e) => setEmail(e.target.value)}
                         />
-                        <label className="focus-label">Email</label>
+                        </div>
                       </div>
-                      <div className="form-group form-focus">
-                        <input
-                          id="dateOfBirthInput"
-                          type="text"
-                          className="form-control floating"
-                          onChange={(e) => setDateOfBirth(e.target.value)}
-                        />
-                        <label className="focus-label">Date Of Birth</label>
+                      <div className="form-group row">
+                        <label className="col-sm-3 col-form-label">
+                          Birthdate
+                        </label>
+                        <div class="col-sm-9">
+                          <input
+                            id="dateOfBirthInput"
+                            type="date"
+                            className="form-control floating"
+                            onChange={(e) => setDateOfBirth(e.target.value)}
+                          />
+                        </div>
                       </div>
-                      <div className="form-group form-focus">
-                        <input
-                          id="genderInput"
-                          type="text"
-                          className="form-control floating"
-                          onChange={(e) => setGender(e.target.value)}
-                        />
-                        <label className="focus-label">Gender</label>
+                      <div className="form-group row">
+                        <label className="col-sm-3 col-form-label">
+                          Gender
+                        </label>
+                        <div class="col-sm-9">
+                          <select
+                            id="genderInput"
+                            className="form-control floating"
+                            onChange={(e) => setGender(e.target.value)}
+                          >
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                          </select>
+                        </div>
                       </div>
-                      <div className="form-group form-focus">
-                        <input
-                          id="usernameInput"
-                          type="text"
-                          className="form-control floating"
-                          onChange={(e) => setUsername(e.target.value)}
-                        />
-                        <label className="focus-label">Username</label>
+                      <div className="form-group row">
+                        <label className="col-sm-3 col-form-label">
+                          Username
+                        </label>
+                        <div class="col-sm-9">
+                          <input
+                            id="usernameInput"
+                            type="text"
+                            className="form-control"
+                            onChange={(e) => setUsername(e.target.value)}
+                          />
+                        </div>
                       </div>
-                      <div className="form-group form-focus">
-                        <input
-                          id="passwordInput"
-                          type="password"
-                          className="form-control floating"
-                          onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <label className="focus-label">Password</label>
+                      <div className="form-group row">
+                        <label className="col-sm-3 col-form-label">
+                          Password
+                        </label>
+                        <div class="col-sm-9">
+                          <input
+                            id="passwordInput"
+                            type="password"
+                            className="form-control floating"
+                            onChange={(e) => setPassword(e.target.value)}
+                          />
+                        </div>
                       </div>
                       <div className="text-right">
                         <a className="forgot-link" href="/login">
