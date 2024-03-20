@@ -135,7 +135,7 @@ function SearchingDepartment({ isLoggedIn, setLoggedIn }) {
                         <div className="doctor-img">
                           <a href="/patient/doctor-profile">
                             <img
-                              src="../../img/doctors/doctor-thumb-01.jpg"
+                              src="../../img/doctors/Hospital.jpg"
                               className="img-fluid"
                               alt="User Image"
                             />
@@ -246,7 +246,7 @@ function SearchingDepartment({ isLoggedIn, setLoggedIn }) {
                           </ul>
                         </div>
                         <div className="clinic-booking">
-                          <a className="view-pro-btn" href="/patient/doctor-profile">
+                          <a className="view-pro-btn" href={`/doctor/search?department=${dere._id}`}>
                             View Doctors
                           </a>
                         </div>

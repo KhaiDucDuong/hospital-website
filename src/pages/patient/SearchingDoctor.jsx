@@ -9,9 +9,14 @@ function SearchingDoctor({ isLoggedIn, setLoggedIn }) {
   let [doctor, setDoctor] = useState("");
   let [doctorresult, setDoctorresult] = useState([]);
   let queryParameters = new URLSearchParams(window.location.search)
-  doctor = queryParameters.get("doctor")
     useEffect(() => {
-        let url = `http://localhost:8080/doctors/search/${doctor}`;
+      doctor = queryParameters.get("doctor")
+      let url = `http://localhost:8080/doctors/search/${doctor}`;
+      if (doctor == null || doctor == "")
+       {
+          doctor = queryParameters.get("department")
+          url = `http://localhost:8080/doctors/department/${doctor}`;
+       }
         let fetchData = async () => {
             try {
                 let response = await fetch(url, {method: 'GET' });
