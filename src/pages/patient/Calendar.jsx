@@ -14,14 +14,14 @@ const MyCalendar = () => {
     <>
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
-        initialView="dayGridMonth"
+        initialView="timeGridWeek"
         weekends={true}
         events={[
           { title: 'Event 1', date: '2024-03-14' },
           { title: 'Event 2', date: '2024-03-15' }
         ]}
         headerToolbar={{
-          start: 'dayGridMonth,timeGridWeek,timeGridDay',
+          start: 'timeGridWeek,timeGridDay',
           center: 'title',
           end: 'today prev,next'
         }}
@@ -85,39 +85,10 @@ const MyCalendar = () => {
             </form>
             
             </Modal.Body>
-
-            {/* <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                Close
-              </Button>
-              <Button variant="primary" onClick={handleClose}>
-                Make an appointment
-              </Button>
-            </Modal.Footer> */}
           </Modal>
           
         </>
       )}
-
-    {/* <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button>
-
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal> */}
-
       </>
   );
 };

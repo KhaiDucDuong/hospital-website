@@ -17,6 +17,20 @@ import { useState } from "react";
 function App() {
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
 
+  const doctorData = {
+    Doctorprofile: {
+      doctor_id: 123,
+      Gender: 1,
+      fullname: "Tiến gié",
+      DOB: "1989-12-12",
+      phone_number: 84848484,
+      department_name: "Bệnh viện dã chiến Bình Dương",
+      Description:
+        "Tôi là bác sĩ chuyên trị bệnh liên quan tới đường ruột với 25 năm kinh nghiệm",
+      Specialize: "Dentist",
+    },
+  };
+
   return (
     <BrowserRouter>
       <Routes>
@@ -32,10 +46,6 @@ function App() {
         <Route
           path="/login"
           element={<Login isLoggedIn={isLoggedIn} />}
-        ></Route>
-        <Route
-          path="/patient/booking"
-          element={<Booking isLoggedIn={isLoggedIn} />}
         ></Route>
         <Route
           path="/doctor/search"
