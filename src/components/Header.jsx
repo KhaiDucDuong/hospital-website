@@ -57,9 +57,6 @@ function Header({ isLoggedIn }) {
                         <a href="/patient/doctor-profile">Doctor Profile</a>
                       </li>
                       <li>
-                        <a href="/patient/booking">Booking</a>
-                      </li>
-                      <li>
                         <a href="booking-success.html">My booking</a>
                       </li>
                       <li>

@@ -12,7 +12,7 @@ const doctorData = {
     DOB : '1989-12-12',
         phone_number : 84848484,
         Department : 'Bệnh viện dã chiến Bình Dương',
-        Description : 'Tôi là bác sĩ chuyên trị bệnh xạo lồn với 25 năm kinh nghiệm',
+        Description : 'Tôi là bác sĩ chuyên trị bệnh dạ dày với 25 năm kinh nghiệm',
         Specialize : 'Dentist',
        }
     }

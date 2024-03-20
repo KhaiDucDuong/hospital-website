@@ -26,11 +26,11 @@ function App() {
       phone_number: 84848484,
       department_name: "Bệnh viện dã chiến Bình Dương",
       Description:
-        "Tôi là bác sĩ chuyên trị bệnh xạo lồn với 25 năm kinh nghiệm",
+        "Tôi là bác sĩ chuyên trị bệnh liên quan tới đường ruột với 25 năm kinh nghiệm",
       Specialize: "Dentist",
     },
   };
-  
+
   return (
     <BrowserRouter>
       <Routes>
@@ -46,10 +46,6 @@ function App() {
         <Route
           path="/login"
           element={<Login isLoggedIn={isLoggedIn} />}
-        ></Route>
-        <Route
-          path="/patient/booking"
-          element={<Booking isLoggedIn={isLoggedIn} doctor={doctorData.Doctorprofile}/>}
         ></Route>
         <Route
           path="/doctor/search"
