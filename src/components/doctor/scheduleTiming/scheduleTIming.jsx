@@ -99,7 +99,7 @@ export default function ScheduleTiming() {
                             onClick={() => setShowModal(true)}
                           >
                             <i className="fa fa-edit mr-1" />
-                            Edit
+                            Add
                           </a>
                         </h4>
                         {/* Slot List */}

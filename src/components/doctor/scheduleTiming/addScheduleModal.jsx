@@ -1,6 +1,34 @@
+import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 
-export default function AddScheduleModal({show, setShow, day}) {
+export default function AddScheduleModal({ show, setShow, day }) {
+  const url = "http://localhost:8080/schedules/createSchedule";
+  const [time, setTime] = useState("8:00 - 9:00");
+
+  const SubmitBtnOnClick = async () => {
+    const requestOptions = {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        dateOfweek: day,
+        time: time,
+      }),
+    };
+    try {
+      let response = await fetch(url, requestOptions);
+      let data = await response.json();
+      if (response.status === 201) {
+        console.log("Create schedule successfully!");
+      } else {
+        console.log("Failed to create schedule!");
+      }
+      console.log(data);
+    } catch (e) {
+      console.log("error", e);
+    }
+  };
+
   return (
     <Modal show={show} onHide={() => setShow(false)} centered>
       <Modal.Header closeButton>
@@ -8,7 +36,7 @@ export default function AddScheduleModal({show, setShow, day}) {
       </Modal.Header>
 
       <Modal.Body>
-        <form action="#">
+        {/* <form> */}
           <div className="form-group row">
             <label className="col-lg-3 col-form-label">Day of Week</label>
             <div className="col-lg-9">
@@ -23,7 +51,11 @@ export default function AddScheduleModal({show, setShow, day}) {
           <div className="form-group row">
             <label className="col-lg-3 col-form-label">Time</label>
             <div className="col-lg-9">
-              <select type="email" className="form-control">
+              <select
+                type="email"
+                className="form-control"
+                onChange={(e) => setTime(e.target.value)}
+              >
                 <option>8:00 - 9:00</option>
                 <option>9:00 - 10:00</option>
                 <option>10:00 - 11:00</option>
@@ -34,11 +66,11 @@ export default function AddScheduleModal({show, setShow, day}) {
             </div>
           </div>
           <div className="text-right">
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary" onClick={() => SubmitBtnOnClick()}>
               Submit
             </button>
           </div>
-        </form>
+        {/* </form> */}
       </Modal.Body>
     </Modal>
   );
