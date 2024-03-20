@@ -21,10 +21,10 @@ function App() {
     Doctorprofile: {
       doctor_id: 123,
       Gender: 1,
-      Name: "Tiến gié",
+      fullname: "Tiến gié",
       DOB: "1989-12-12",
       phone_number: 84848484,
-      Department: "Bệnh viện dã chiến Bình Dương",
+      department_name: "Bệnh viện dã chiến Bình Dương",
       Description:
         "Tôi là bác sĩ chuyên trị bệnh xạo lồn với 25 năm kinh nghiệm",
       Specialize: "Dentist",
@@ -48,7 +48,7 @@ function App() {
         ></Route>
         <Route
           path="/patient/booking"
-          element={<Booking isLoggedIn={isLoggedIn} />}
+          element={<Booking isLoggedIn={isLoggedIn} doctor={doctorData.Doctorprofile}/>}
         ></Route>
         <Route
           path="/doctor/search"
