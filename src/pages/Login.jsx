@@ -7,7 +7,7 @@ function Login({ isLoggedIn }) {
   const url = "http://localhost:8080/authentications/signIn";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const SignInBtnOnClick = async () => {
     const requestOptions = {
@@ -24,7 +24,7 @@ function Login({ isLoggedIn }) {
       let data = await response.json();
       if (response.status === 200) {
         localStorage.setItem("isLoggedIn", true);
-        // navigate("/");
+        navigate("/");
       } else {
         console.log("Login failed");
       }

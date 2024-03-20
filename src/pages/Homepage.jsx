@@ -3,7 +3,9 @@ import Header from '../components/Header';
 import HomeBanner from '../components/Homepage/HomeBanner';
 import Footer from '../components/Footer';
 
-function Homepage({isLoggedIn, setLoggedIn}) {
+function Homepage() {
+  const isLoggedIn = window.localStorage.getItem("isLoggedIn");
+
   return (
     <>
         <div className="main-wrapper">

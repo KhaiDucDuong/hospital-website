@@ -33,7 +33,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Homepage isLoggedIn={isLoggedIn} />}></Route>
+        <Route path="/" element={<Homepage />}></Route>
         <Route
           path="/doctor"
           element={<Doctor isLoggedIn={isLoggedIn} />}
