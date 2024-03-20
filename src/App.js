@@ -6,13 +6,12 @@ import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Booking from "./pages/patient/Booking";
-import SearchingDoctor from "./pages/patient/SearchingDoctor";
+import SearchingDoctor from "./pages/patient/SearchDoctor/SearchingDoctor";
 import SearchingDepartment from "./pages/patient/SearchingDepartment";
 import DoctorProfile from "./pages/patient/DoctorProfile";
 import PatientProfile from "./pages/patient/PatientProfile";
 import PatientSettings from "./pages/patient/PatientSettings";
 import Admin from "./pages/admin";
-import { useState } from "react";
 
 function App() {
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
@@ -59,6 +58,12 @@ function App() {
           path="/patient/doctor-profile"
           element={
             <DoctorProfile isLoggedIn={isLoggedIn} />
+          }
+        ></Route>
+        <Route
+          path="/patient/booking"
+          element={
+            <Booking isLoggedIn={isLoggedIn} />
           }
         ></Route>
         <Route

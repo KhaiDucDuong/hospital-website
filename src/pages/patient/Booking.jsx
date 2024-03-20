@@ -3,8 +3,12 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import MyCalendar from "./Calendar";
 import DoctorProfile from "../../components/doctor/doctorProfile";
+import { useLocation } from "react-router-dom";
 
-function Booking({ isLoggedIn, doctor }) {
+function Booking({ isLoggedIn }) {
+  const locationData = useLocation();
+  let doctor = locationData.state.doctor;
+
   return (
     <>
       <Header isLoggedIn={isLoggedIn} />
