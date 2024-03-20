@@ -51,7 +51,7 @@ function Header({ isLoggedIn }) {
                     </a>
                     <ul className="submenu">
                       <li>
-                        <a href="/patient/search">Search Doctor</a>
+                        <a href="/doctor/search?doctor=all">Search Doctor</a>
                       </li>
                       <li>
                         <a href="/patient/doctor-profile">Doctor Profile</a>

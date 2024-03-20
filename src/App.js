@@ -30,6 +30,7 @@ function App() {
       Specialize: "Dentist",
     },
   };
+  
   return (
     <BrowserRouter>
       <Routes>
@@ -59,9 +60,9 @@ function App() {
           element={<SearchingDepartment isLoggedIn={isLoggedIn} />}
         ></Route>
         <Route
-          path="/patient/doctor-profile/:id"
+          path="/patient/doctor-profile"
           element={
-            <DoctorProfile doctor={doctorData} isLoggedIn={isLoggedIn} />
+            <DoctorProfile isLoggedIn={isLoggedIn} />
           }
         ></Route>
         <Route
