@@ -15,7 +15,7 @@ function Homepage() {
             {/* /Header */}
 
             {/* Home Banner */}
-            <HomeBanner/>
+            <HomeBanner isLoggedIn={isLoggedIn}/>
             {/*Home banner */}
 
             {/* Footer */}
