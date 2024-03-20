@@ -3,17 +3,18 @@ export default function ScheduleHeader({selectedDayTab, setSelectedDayTab}) {
     <div className="schedule-header">
       <div className="schedule-nav">
         <ul className="nav nav-tabs nav-justified">
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <a
               className={
-                "nav-link schedule-tab-item " + (selectedDayTab === "Sunday" && "active")
+                "nav-link schedule-tab-item " 
+                // + (selectedDayTab === "Sunday" && "active")
               }
-              onClick={() => setSelectedDayTab("Sunday")}
+              // onClick={() => setSelectedDayTab("Sunday")}
               data-toggle="tab"
             >
               Sunday
             </a>
-          </li>
+          </li> */}
           <li className="nav-item">
             <a
               className={
@@ -69,17 +70,18 @@ export default function ScheduleHeader({selectedDayTab, setSelectedDayTab}) {
               Friday
             </a>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <a
               className={
-                "nav-link schedule-tab-item " + (selectedDayTab === "Saturday" && "active")
+                "nav-link schedule-tab-item " 
+                // + (selectedDayTab === "Saturday" && "active")
               }
-              onClick={() => setSelectedDayTab("Saturday")}
+              // onClick={() => setSelectedDayTab("Saturday")}
               data-toggle="tab"
             >
               Saturday
             </a>
-          </li>
+          </li> */}
         </ul>
       </div>
     </div>
