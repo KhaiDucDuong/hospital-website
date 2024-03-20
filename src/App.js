@@ -17,19 +17,6 @@ import { useState } from "react";
 function App() {
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
 
-  const doctorData = {
-    Doctorprofile: {
-      doctor_id: 123,
-      Gender: 1,
-      Name: "Tiến gié",
-      DOB: "1989-12-12",
-      phone_number: 84848484,
-      Department: "Bệnh viện dã chiến Bình Dương",
-      Description:
-        "Tôi là bác sĩ chuyên trị bệnh xạo lồn với 25 năm kinh nghiệm",
-      Specialize: "Dentist",
-    },
-  };
   return (
     <BrowserRouter>
       <Routes>
@@ -59,9 +46,9 @@ function App() {
           element={<SearchingDepartment isLoggedIn={isLoggedIn} />}
         ></Route>
         <Route
-          path="/patient/doctor-profile/:id"
+          path="/patient/doctor-profile"
           element={
-            <DoctorProfile doctor={doctorData} isLoggedIn={isLoggedIn} />
+            <DoctorProfile isLoggedIn={isLoggedIn} />
           }
         ></Route>
         <Route
