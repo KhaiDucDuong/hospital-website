@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { Navigate, useNavigate} from "react-router-dom";
 
-
-function Login() {
+function Login({ isLoggedIn }) {
   const url = "http://localhost:8080/authentications/signIn";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [jsessionId, setJsessionId] = useState("")
+  // const navigate = useNavigate();
 
-  function signInBtnOnClick() {
+  const SignInBtnOnClick = async () => {
     const requestOptions = {
       method: "POST",
       credentials: "include",
@@ -19,24 +19,25 @@ function Login() {
         password: password,
       }),
     };
-    fetch(url, requestOptions)
-      .then((response) => {
-        if(response.status === 200) {
-            return Promise.all([response.json(), response.headers]);
-        }
-        else {
-            return Promise.reject("Login failed");
-        }
-      }).then(([body, headers]) => {
-        console.log(body)
-        console.log(headers)
-      });
-  }
+    try {
+      let response = await fetch(url, requestOptions);
+      let data = await response.json();
+      if (response.status === 200) {
+        localStorage.setItem("isLoggedIn", true);
+        // navigate("/");
+      } else {
+        console.log("Login failed");
+      }
+      console.log(data);
+    } catch (e) {
+      console.log("error", e);
+    }
+  };
 
   return (
     <>
-      <Header />
-
+      {isLoggedIn && <Navigate to="/" replace={true} />}
+      <Header isLoggedIn={isLoggedIn} />
       {/* Page Content */}
       <div className="content" style={{ padding: "125px" }}>
         <div className="container-fluid">
@@ -59,61 +60,61 @@ function Login() {
                       </h3>
                     </div>
                     {/* <form> */}
-                      <div className="form-group row">
-                        <label className="col-sm-3 col-form-label">
-                          Username
-                        </label>
-                        <div class="col-sm-9">
-                          <input
-                            type="text"
-                            className="form-control floating"
-                            onChange={(e) => setUsername(e.target.value)}
-                          />
-                        </div>
+                    <div className="form-group row">
+                      <label className="col-sm-3 col-form-label">
+                        Username
+                      </label>
+                      <div class="col-sm-9">
+                        <input
+                          type="text"
+                          className="form-control floating"
+                          onChange={(e) => setUsername(e.target.value)}
+                        />
                       </div>
-                      <div className="form-group row">
-                        <label className="col-sm-3 col-form-label">
-                          Password
-                        </label>
-                        <div class="col-sm-9">
-                          <input
-                            type="password"
-                            className="form-control floating"
-                            onChange={(e) => setPassword(e.target.value)}
-                          />
-                        </div>
+                    </div>
+                    <div className="form-group row">
+                      <label className="col-sm-3 col-form-label">
+                        Password
+                      </label>
+                      <div class="col-sm-9">
+                        <input
+                          type="password"
+                          className="form-control floating"
+                          onChange={(e) => setPassword(e.target.value)}
+                        />
                       </div>
-                      <div className="text-right">
-                        <a className="forgot-link" href="forgot-password.html">
-                          Forgot Password ?
+                    </div>
+                    <div className="text-right">
+                      <a className="forgot-link" href="forgot-password.html">
+                        Forgot Password ?
+                      </a>
+                    </div>
+                    <button
+                      className="btn btn-primary btn-block btn-lg login-btn"
+                      type="submit"
+                      onClick={() => SignInBtnOnClick()}
+                    >
+                      Login
+                    </button>
+                    <div className="login-or">
+                      <span className="or-line" />
+                      <span className="span-or">or</span>
+                    </div>
+                    <div className="row form-row social-login">
+                      <div className="col-6">
+                        <a href="#" className="btn btn-facebook btn-block">
+                          <i className="fab fa-facebook-f mr-1" /> Login
                         </a>
                       </div>
-                      <button
-                        className="btn btn-primary btn-block btn-lg login-btn"
-                        type="submit"
-                        onClick={() => signInBtnOnClick()}
-                      >
-                        Login
-                      </button>
-                      <div className="login-or">
-                        <span className="or-line" />
-                        <span className="span-or">or</span>
+                      <div className="col-6">
+                        <a href="#" className="btn btn-google btn-block">
+                          <i className="fab fa-google mr-1" /> Login
+                        </a>
                       </div>
-                      <div className="row form-row social-login">
-                        <div className="col-6">
-                          <a href="#" className="btn btn-facebook btn-block">
-                            <i className="fab fa-facebook-f mr-1" /> Login
-                          </a>
-                        </div>
-                        <div className="col-6">
-                          <a href="#" className="btn btn-google btn-block">
-                            <i className="fab fa-google mr-1" /> Login
-                          </a>
-                        </div>
-                      </div>
-                      <div className="text-center dont-have">
-                        Don’t have an account? <a href="/register">Register</a>
-                      </div>
+                    </div>
+                    <div className="text-center dont-have">
+                      Don’t have an account? <a href="/register">Register</a>
+                    </div>
                     {/* </form> */}
                   </div>
                 </div>

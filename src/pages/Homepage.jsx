@@ -3,13 +3,13 @@ import Header from '../components/Header';
 import HomeBanner from '../components/Homepage/HomeBanner';
 import Footer from '../components/Footer';
 
-function Homepage() {
+function Homepage({isLoggedIn, setLoggedIn}) {
   return (
     <>
         <div className="main-wrapper">
 
             {/* Header */}
-            <Header/>
+            <Header isLoggedIn={isLoggedIn} />
             {/* /Header */}
 
             {/* Home Banner */}

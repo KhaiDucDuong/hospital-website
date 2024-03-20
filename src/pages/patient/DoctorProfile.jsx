@@ -17,11 +17,11 @@ const doctorData = {
        }
     }
 
-const DoctorProfile = () => {
+const DoctorProfile = ({ isLoggedIn, setLoggedIn }) => {
 
   return (
     <>
-        <Header/>
+        <Header isLoggedIn={isLoggedIn} />
         {/* Page Content */}
         <div className="content" style={{padding: '125px'}}>
             <div className="container">
@@ -70,7 +70,7 @@ const DoctorProfile = () => {
                         <div className="clinic-details">
                         <p className="doc-location">
                             <i className="fas fa-map-marker-alt" /> Newyork, USA -{" "}
-                            <a href="javascript:void(0);">Get Directions</a>
+                            <a >Get Directions</a>
                         </p>
                         <ul className="clinic-gallery">
                             <li>
@@ -445,7 +445,7 @@ const DoctorProfile = () => {
                                 {" "}
                                 <i className="fas fa-map-marker-alt" /> 2286 Sundown
                                 Lane, Austin, Texas 78749, USA <br />
-                                <a href="javascript:void(0);">Get Directions</a>
+                                <a >Get Directions</a>
                                 </h5>
                                 <ul>
                                 <li>
@@ -554,7 +554,7 @@ const DoctorProfile = () => {
                                 <i className="fas fa-map-marker-alt" /> 2883
                                 University Street, Seattle, Texas Washington, 98155{" "}
                                 <br />
-                                <a href="javascript:void(0);">Get Directions</a>
+                                <a >Get Directions</a>
                                 </p>
                                 <ul>
                                 <li>

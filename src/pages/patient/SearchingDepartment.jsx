@@ -5,7 +5,7 @@ import Footer from '../../components/Footer'
 import { useEffect, useState } from "react";
 
 
-function SearchingDepartment() {
+function SearchingDepartment({ isLoggedIn, setLoggedIn }) {
   let [department, setApartment] = useState("");
   let [departmentresult, setApartmentresult] = useState([]);
   let queryParameters = new URLSearchParams(window.location.search)
@@ -26,7 +26,7 @@ function SearchingDepartment() {
     }, []);
   return (
     <>
-      <Header/>
+      <Header isLoggedIn={isLoggedIn} />
       <Breadcrumb data={department}/>
 
         {/* Page Content */}
@@ -268,7 +268,7 @@ function SearchingDepartment() {
 
                 {/* /Doctor Widget */}
                 <div className="load-more text-center">
-                  <a className="btn btn-primary btn-sm" href="javascript:void(0);">
+                  <a className="btn btn-primary btn-sm" >
                     Load More
                   </a>
                 </div>

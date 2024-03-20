@@ -1,15 +1,14 @@
-import React from 'react'
-import Header from '../../components/Header'
-import Footer from '../../components/Footer'
-import MyCalendar from './Calendar'
+import React from "react";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+import MyCalendar from "./Calendar";
 
-function Booking() {
+function Booking({ isLoggedIn, setLoggedIn }) {
   return (
     <>
+      <Header isLoggedIn={isLoggedIn} />
 
-      <Header/>
-
-      <div className="content" style={{padding: "100px 0"}}>
+      <div className="content" style={{ padding: "100px 0" }}>
         <div className="container-fluid">
           <div className="row">
             {/* Calendar Events */}
@@ -49,29 +48,24 @@ function Booking() {
               </div>
             </div>
             {/* /Calendar Events */}
-            
-            
+
             {/* Calendar */}
             <div className="col-md-7 col-lg-8 col-xl-9">
               <div className="card">
                 <div className="card-body">
-                  
                   <MyCalendar />
-                
+                </div>
               </div>
+              {/* /Calendar */}
             </div>
-            {/* /Calendar */}
-
           </div>
         </div>
-      </div>
-      {/* /Page Content */}
+        {/* /Page Content */}
       </div>
 
-      <Footer/>
+      <Footer />
     </>
-
-  )
+  );
 }
 
 export default Booking;

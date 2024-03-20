@@ -1,6 +1,12 @@
 import React from "react";
 
-function Header() {
+function Header({ isLoggedIn }) {
+  console.log(isLoggedIn);
+  function logOut() {
+    window.localStorage.removeItem("isLoggedIn")
+    window.location.reload();
+  }
+
   return (
     <>
       <header className="header">
@@ -34,42 +40,43 @@ function Header() {
               <li className="active">
                 <a href="/">Home</a>
               </li>
-              <li className="has-submenu">
-                <a href="/doctor">Doctors</a>
-              </li>
-              <li className="has-submenu">
-                <a href="/patient/search">
-                  Patients <i className="fas fa-chevron-down" />
-                </a>
-                <ul className="submenu">
-                  <li>
-                    <a href="/patient/search">Search Doctor</a>
+              {isLoggedIn && (
+                <>
+                  <li className="has-submenu">
+                    <a href="/doctor">Doctors</a>
+                  </li>
+                  <li className="has-submenu">
+                    <a href="/patient/search">
+                      Patients <i className="fas fa-chevron-down" />
+                    </a>
+                    <ul className="submenu">
+                      <li>
+                        <a href="/patient/search">Search Doctor</a>
+                      </li>
+                      <li>
+                        <a href="/patient/doctor-profile">Doctor Profile</a>
+                      </li>
+                      <li>
+                        <a href="/patient/booking">Booking</a>
+                      </li>
+                      <li>
+                        <a href="booking-success.html">My booking</a>
+                      </li>
+                      <li>
+                        <a href="/patient/profile">My profile</a>
+                      </li>
+                      <li>
+                        <a href="/patient/settings">Profile Settings</a>
+                      </li>
+                    </ul>
                   </li>
                   <li>
-                    <a href="/patient/doctor-profile">Doctor Profile</a>
+                    <a href="admin/" target="_blank">
+                      Admin
+                    </a>
                   </li>
-                  <li>
-                    <a href="/patient/booking">Booking</a>
-                  </li>
-                  <li>
-                    <a href="booking-success.html">My booking</a>
-                  </li>
-                  <li>
-                    <a href="/patient/profile">My profile</a>
-                  </li>
-                  <li>
-                    <a href="/patient/settings">Profile Settings</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="admin/" target="_blank">
-                  Admin
-                </a>
-              </li>
-              <li className="login-link">
-                <a href="/login">Login / Signup</a>
-              </li>
+                </>
+              )}
             </ul>
           </div>
           <ul className="nav header-navbar-rht">
@@ -78,11 +85,16 @@ function Header() {
                 <i className="far fa-hospital" />
               </div>
             </li>
-            <li className="nav-item">
+            {!isLoggedIn ? <li className="nav-item">
               <a className="nav-link header-login" href="/login">
                 login / Signup{" "}
               </a>
-            </li>
+            </li> : <li className="nav-item">
+              <a className="nav-link header-login" onClick={() => logOut()}>
+                Logout{" "}
+              </a>
+            </li>}
+            
           </ul>
         </nav>
       </header>

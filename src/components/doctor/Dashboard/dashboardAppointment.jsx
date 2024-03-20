@@ -28,19 +28,19 @@ export default function DashboardAppointment({ appointment, disableBtn }) {
         <td className="text-right">
           <div className="table-action">
             <a
-              href="javascript:void(0);"
+              
               className="btn btn-sm bg-info-light m-1"
             >
               <i className="far fa-eye" /> View
             </a>
             <a
-              href="javascript:void(0);"
+              
               className="btn btn-sm bg-success-light m-1"
             >
               <i className="fas fa-check" /> Accept
             </a>
             <a
-              href="javascript:void(0);"
+              
               className="btn btn-sm bg-danger-light m-1"
             >
               <i className="fas fa-times" /> Cancel
