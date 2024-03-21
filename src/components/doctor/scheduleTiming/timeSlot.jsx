@@ -1,7 +1,7 @@
-export default function TimeSlot({startTime, endTime}) {
+export default function TimeSlot({time}) {
   return (
     <div className="doc-slot-list">
-      {startTime} - {endTime}
+      {time}
       <a className="delete_schedule">
         <i className="fa fa-times" />
       </a>

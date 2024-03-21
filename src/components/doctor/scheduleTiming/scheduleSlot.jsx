@@ -1,10 +1,12 @@
 import TimeSlot from "./timeSlot";
 
-export default function ScheduleSlot({ day, schedule }) {
+export default function ScheduleSlot({ day, schedules }) {
+  console.log("SHEDULE SLOT")
+  console.log(schedules)
   return (
     <div className="doc-times">
-      {schedule.map((schedule) => (
-        <TimeSlot startTime={schedule.startTime} endTime={schedule.endTime} />
+      {schedules.map((schedule) => (
+        <TimeSlot time={schedule.time} />
       ))}
     </div>
   );
