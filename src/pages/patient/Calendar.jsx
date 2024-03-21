@@ -31,7 +31,7 @@ const MyCalendar = ({schedulesData}) => {
   }
   const generateScheduleList = (schedules) => {
     let currentDay = new Date(); // Get current day
-    const daysOfWeek = ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const daysOfWeek = ['', 'Thursday','Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday'];
     const day = (currentDay.getFullYear() + "-" + (currentDay.getMonth() + 1) + "-" + (currentDay.getDate() + 3));
     // Initialize the list
 
