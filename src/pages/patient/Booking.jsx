@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import MyCalendar from "./Calendar";
@@ -9,6 +9,7 @@ function Booking({ isLoggedIn }) {
   const locationData = useLocation();
   let doctor = locationData.state.doctor;
   console.log(doctor)
+  const [schedules, setSchedules] = useState()
 
   useEffect(() => {
     const url = "http://localhost:8080/schedules/listSchedule/" + doctor._id;
@@ -19,6 +20,7 @@ function Booking({ isLoggedIn }) {
         });
         const data = await response.json();    
         console.log(data)  
+        setSchedules(data)
       } catch (error) {
         console.log("error", error);
       }
@@ -51,7 +53,7 @@ function Booking({ isLoggedIn }) {
             <div className="col-md-7 col-lg-8 col-xl-9">
               <div className="card">
                 <div className="card-body">
-                  <MyCalendar />
+                  <MyCalendar schedulesData={schedules}/>
                 </div>
               </div>
               {/* /Calendar */}
