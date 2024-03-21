@@ -1,12 +1,29 @@
 import React from 'react'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
+import { useEffect, useState } from "react";
 
-const PatientProfile = () => {
+const PatientProfile = ({ isLoggedIn, setLoggedIn }) => {
+    const [patient, setPatient] = useState("");
+
+    useEffect(() => {
+        const url = "http://localhost:8080/patients/info";
+        const fetchData = async () => {
+            try {
+                const response = await fetch(url, {Header: "GET", credentials: "include"});
+                const data = await response.json();
+                console.log(data);
+                setPatient(data)
+            } catch (error) {
+                console.log("error", error);
+            }
+        };
+        fetchData();
+    }, []);
+    const genderString = patient.gender ? 'Male' : 'Female';
   return (
     <>
-        <Header/>
-        
+        <Header isLoggedIn={isLoggedIn} />
         <>
             <div className="content" style={{padding: '100px 0'}}>
                 <div className="container-fluid">
@@ -24,14 +41,13 @@ const PatientProfile = () => {
                                 />
                             </a>
                             <div className="profile-det-info">
-                                <h3>Richard Wilson</h3>
+                                <h3>{patient.fullname}</h3>
                                 <div className="patient-details">
                                 <h5>
-                                    <b>Patient ID :</b> PT0016
+                                    <b>Patient ID : {patient._id}</b>
                                 </h5>
                                 <h5 className="mb-0">
-                                    <i className="fas fa-map-marker-alt" /> Newyork, United
-                                    States
+                                    <i className="fas fa-map-marker-alt" />Gender : {genderString}
                                 </h5>
                                 </div>
                             </div>
@@ -40,10 +56,10 @@ const PatientProfile = () => {
                         <div className="patient-info">
                             <ul>
                             <li>
-                                Phone <span>+1 952 001 8563</span>
+                                Phone <span>{patient.phoneNumber}</span>
                             </li>
                             <li>
-                                Age <span>38 Years, Male</span>
+                                Date of Birth <span>{new Date(patient.dateOfbirth).toDateString()}</span>
                             </li>
                             <li>
                                 Blood Group <span>AB+</span>
@@ -187,7 +203,7 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-success-light"
                                             >
                                                 <i className="far fa-edit" /> Edit
@@ -230,7 +246,7 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-success-light"
                                             >
                                                 <i className="far fa-edit" /> Edit
@@ -273,7 +289,7 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-success-light"
                                             >
                                                 <i className="far fa-edit" /> Edit
@@ -322,7 +338,7 @@ const PatientProfile = () => {
                                                 <i className="far fa-edit" /> Edit
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-danger-light"
                                             >
                                                 <i className="far fa-trash-alt" /> Cancel
@@ -365,7 +381,7 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-success-light"
                                             >
                                                 <i className="far fa-edit" /> Edit
@@ -408,7 +424,7 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-success-light"
                                             >
                                                 <i className="far fa-edit" /> Edit
@@ -451,7 +467,7 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-success-light"
                                             >
                                                 <i className="far fa-edit" /> Edit
@@ -494,7 +510,7 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="far fa-clock" /> Reschedule
@@ -537,7 +553,7 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="far fa-clock" /> Reschedule
@@ -580,7 +596,7 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="far fa-clock" /> Reschedule
@@ -638,13 +654,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -675,13 +691,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -693,7 +709,7 @@ const PatientProfile = () => {
                                                 <i className="fas fa-edit" /> Edit
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-danger-light"
                                             >
                                                 <i className="far fa-trash-alt" /> Delete
@@ -724,13 +740,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -761,13 +777,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -798,13 +814,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -836,13 +852,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -873,13 +889,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -910,13 +926,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -947,13 +963,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -984,13 +1000,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -1034,7 +1050,7 @@ const PatientProfile = () => {
                                     <tbody>
                                         <tr>
                                         <td>
-                                            <a href="javascript:void(0);">#MR-0010</a>
+                                            <a >#MR-0010</a>
                                         </td>
                                         <td>14 Nov 2019</td>
                                         <td>Dental Filling</td>
@@ -1061,13 +1077,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -1077,7 +1093,7 @@ const PatientProfile = () => {
                                         </tr>
                                         <tr>
                                         <td>
-                                            <a href="javascript:void(0);">#MR-0009</a>
+                                            <a >#MR-0009</a>
                                         </td>
                                         <td>13 Nov 2019</td>
                                         <td>Teeth Cleaning</td>
@@ -1104,13 +1120,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -1124,7 +1140,7 @@ const PatientProfile = () => {
                                                 <i className="fas fa-edit" /> Edit
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-danger-light"
                                             >
                                                 <i className="far fa-trash-alt" /> Delete
@@ -1134,7 +1150,7 @@ const PatientProfile = () => {
                                         </tr>
                                         <tr>
                                         <td>
-                                            <a href="javascript:void(0);">#MR-0008</a>
+                                            <a >#MR-0008</a>
                                         </td>
                                         <td>12 Nov 2019</td>
                                         <td>General Checkup</td>
@@ -1161,13 +1177,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -1177,7 +1193,7 @@ const PatientProfile = () => {
                                         </tr>
                                         <tr>
                                         <td>
-                                            <a href="javascript:void(0);">#MR-0007</a>
+                                            <a >#MR-0007</a>
                                         </td>
                                         <td>11 Nov 2019</td>
                                         <td>General Test</td>
@@ -1204,13 +1220,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -1220,7 +1236,7 @@ const PatientProfile = () => {
                                         </tr>
                                         <tr>
                                         <td>
-                                            <a href="javascript:void(0);">#MR-0006</a>
+                                            <a >#MR-0006</a>
                                         </td>
                                         <td>10 Nov 2019</td>
                                         <td>Eye Test</td>
@@ -1248,13 +1264,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -1264,7 +1280,7 @@ const PatientProfile = () => {
                                         </tr>
                                         <tr>
                                         <td>
-                                            <a href="javascript:void(0);">#MR-0005</a>
+                                            <a >#MR-0005</a>
                                         </td>
                                         <td>9 Nov 2019</td>
                                         <td>Leg Pain</td>
@@ -1292,13 +1308,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -1308,7 +1324,7 @@ const PatientProfile = () => {
                                         </tr>
                                         <tr>
                                         <td>
-                                            <a href="javascript:void(0);">#MR-0004</a>
+                                            <a >#MR-0004</a>
                                         </td>
                                         <td>8 Nov 2019</td>
                                         <td>Head pain</td>
@@ -1335,13 +1351,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -1351,7 +1367,7 @@ const PatientProfile = () => {
                                         </tr>
                                         <tr>
                                         <td>
-                                            <a href="javascript:void(0);">#MR-0003</a>
+                                            <a >#MR-0003</a>
                                         </td>
                                         <td>7 Nov 2019</td>
                                         <td>Skin Alergy</td>
@@ -1378,13 +1394,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -1394,7 +1410,7 @@ const PatientProfile = () => {
                                         </tr>
                                         <tr>
                                         <td>
-                                            <a href="javascript:void(0);">#MR-0002</a>
+                                            <a >#MR-0002</a>
                                         </td>
                                         <td>6 Nov 2019</td>
                                         <td>Dental Removing</td>
@@ -1421,13 +1437,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -1437,7 +1453,7 @@ const PatientProfile = () => {
                                         </tr>
                                         <tr>
                                         <td>
-                                            <a href="javascript:void(0);">#MR-0001</a>
+                                            <a >#MR-0001</a>
                                         </td>
                                         <td>5 Nov 2019</td>
                                         <td>Dental Filling</td>
@@ -1464,13 +1480,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -1532,13 +1548,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -1572,13 +1588,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -1590,7 +1606,7 @@ const PatientProfile = () => {
                                                 <i className="fas fa-edit" /> Edit
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-danger-light"
                                             >
                                                 <i className="far fa-trash-alt" /> Delete
@@ -1624,13 +1640,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -1664,13 +1680,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -1705,13 +1721,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -1746,13 +1762,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -1786,13 +1802,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -1826,13 +1842,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -1866,13 +1882,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View
@@ -1906,13 +1922,13 @@ const PatientProfile = () => {
                                         <td className="text-right">
                                             <div className="table-action">
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-primary-light"
                                             >
                                                 <i className="fas fa-print" /> Print
                                             </a>
                                             <a
-                                                href="javascript:void(0);"
+                                                
                                                 className="btn btn-sm bg-info-light"
                                             >
                                                 <i className="far fa-eye" /> View

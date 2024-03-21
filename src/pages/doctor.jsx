@@ -21,7 +21,7 @@ const ScheduleTiming = lazy(() =>
   import("../components/doctor/scheduleTiming/scheduleTIming")
 );
 
-export default function Doctor() {
+export default function Doctor({ isLoggedIn, setLoggedIn }) {
   const doctor = DOCTOR;
   const [selectedWidget, setSelectedWidget] = useState("dashboard");
   let today_date = new Date().toDateString();
@@ -39,7 +39,7 @@ export default function Doctor() {
   return (
     <>
       {/* Main Wrapper */}
-      <Header />
+      <Header isLoggedIn={isLoggedIn}  />
       <div className="main-wrapper">
         <Breadcrumb />
 

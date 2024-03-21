@@ -9,36 +9,69 @@ import SlideBar from "../components/admin/slideBar";
 import Dashboard from "../components/admin/dashboard/dashboard";
 import { lazy, useState, useEffect } from "react";
 import { Suspense } from "react";
-
-
-const Appointments = lazy(() => import("../components/admin/appointments/appointments"));
-const Departments = lazy(() => import("../components/admin/departments/departments"));
+import { getAllDepartments } from "../services/DepartmentService";
+import { getAllDoctors } from "../services/DoctorService";
+import { getAllPatients } from "../services/PatientService";
+const Appointments = lazy(() =>
+  import("../components/admin/appointments/appointments")
+);
+const Departments = lazy(() =>
+  import("../components/admin/departments/departments")
+);
 const Doctors = lazy(() => import("../components/admin/doctors/doctors"));
 const Patients = lazy(() => import("../components/admin/patients/patients"));
-const AddDoctors = lazy(()=> import("../components/admin/doctors/AddDoctors.jsx"));
-const EditDoctors = lazy(()=> import("../components/admin/doctors/EditDoctors"));
-const AddDepartments = lazy(()=> import("../components/admin/departments/AddDepartments"));
-const EditDepartments = lazy(()=> import("../components/admin/departments/EditDepartments"));
-export default function Admin() {
+const AddDoctors = lazy(() =>
+  import("../components/admin/doctors/AddDoctors.jsx")
+);
+const EditDoctors = lazy(() =>
+  import("../components/admin/doctors/EditDoctors")
+);
+const AddDepartments = lazy(() =>
+  import("../components/admin/departments/AddDepartments")
+);
+const EditDepartments = lazy(() =>
+  import("../components/admin/departments/EditDepartments")
+);
+export default function Admin({ isLoggedIn, setLoggedIn }) {
   const [selectedWidget, setSelectedWidget] = useState("dashboard");
+
+  const [departmentList, setDepartmentList] = useState([]);
+  const [doctorList, setDoctorList] = useState([]);
+  const [patientList, setPatientList] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+          const responseDoctor = await getAllDoctors();
+          setDoctorList(responseDoctor.data);
+
+          const responsePatient = await getAllPatients();
+          setPatientList(responsePatient.data);
+
+          const responseDepartment = await getAllDepartments();
+          setDepartmentList(responseDepartment.data);
+
+        } catch (error) {
+          console.log(error);
+        }
+    };
+
+    fetchData();
+  }, []);
   return (
     <div className="main-wrapper">
-      <Header />
+      <Header isLoggedIn={isLoggedIn}  />
       <SlideBar
         selectedWidget={selectedWidget}
         setSelectedWidget={setSelectedWidget}
       />
       <Suspense>
-        {selectedWidget === "dashboard" && <Dashboard />}
-        {selectedWidget === "appointments" && <Appointments />}
-        {selectedWidget === "departments" && <Departments selectedWidget={selectedWidget} setSelectedWidget={setSelectedWidget}/>}
-        {selectedWidget === "doctors" && <Doctors selectedWidget={selectedWidget} setSelectedWidget={setSelectedWidget}/>}
-        {selectedWidget === "patients" && <Patients />}
-        {selectedWidget === "addDoctors" && <AddDoctors/>}
-        {selectedWidget === "editDoctors" && <EditDoctors/>}
-        {selectedWidget === "addDepartments" && <AddDepartments/>}
-        {selectedWidget === "editDepartments" && <EditDepartments/>}
-      </Suspense> 
+        {selectedWidget === "dashboard" && <Dashboard doctors = {doctorList} patients = {patientList}/>}
+        {selectedWidget === "appointments" && <Appointments departments = {departmentList}/>}
+        {selectedWidget === "departments" && <Departments departments = {departmentList}/>}
+        {selectedWidget === "doctors" && <Doctors doctors = {doctorList}/>}
+        {selectedWidget === "patients" && <Patients patients = {patientList}/>}
+      </Suspense>
     </div>
   );
 }

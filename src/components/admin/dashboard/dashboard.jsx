@@ -1,4 +1,15 @@
-export default function Dashboard() {
+import { useState, useEffect } from "react";
+import {getAllDoctors} from '../../../services/DoctorService.js';
+import { getAllPatients } from "../../../services/PatientService.js";
+
+export default function Dashboard(props) {
+  const [doctorList, setDoctorList] = useState([]);
+  const [patientList, setPatientList] = useState([]);
+  useEffect(() => {
+    setDoctorList(props.doctors);
+    setPatientList(props.patients);
+  });
+
   return (
     <div className="page-wrapper">
       <div className="content container-fluid">
@@ -23,7 +34,7 @@ export default function Dashboard() {
                     <i className="fe fe-users" />
                   </span>
                   <div className="dash-count">
-                    <h3>168</h3>
+                    <h3>{doctorList.length}</h3>
                   </div>
                 </div>
                 <div className="dash-widget-info">
@@ -43,7 +54,7 @@ export default function Dashboard() {
                     <i className="fe fe-credit-card" />
                   </span>
                   <div className="dash-count">
-                    <h3>487</h3>
+                    <h3>{patientList.length}</h3>
                   </div>
                 </div>
                 <div className="dash-widget-info">
@@ -63,7 +74,7 @@ export default function Dashboard() {
                     <i className="fe fe-money" />
                   </span>
                   <div className="dash-count">
-                    <h3>485</h3>
+                    <h3>11</h3>
                   </div>
                 </div>
                 <div className="dash-widget-info">
@@ -104,17 +115,19 @@ export default function Dashboard() {
                 <h4 className="card-title">Doctors List</h4>
               </div>
               <div className="card-body">
-                <div className="table-responsive">
-                  <table className="table table-hover table-center mb-0">
+                <div className="table-responsive" style={{ overflowX: 'auto', maxHeight: '400px' }}>
+                  <table className="table table-hover table-center mb-0" >
                     <thead>
                       <tr>
                         <th>Doctor Name</th>
                         <th>Speciality</th>
-                        <th>Earned</th>
+                        <th>Salary</th>
+                        <th>Reviews</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
+                      {doctorList.map((doctor) => (
+                        <tr>
                         <td>
                           <h2 className="table-avatar">
                             <a
@@ -127,88 +140,21 @@ export default function Dashboard() {
                                 alt="User Image"
                               />
                             </a>
-                            <a href="profile.html">Dr. Ruby Perrin</a>
+                            <a href="profile.html">{doctor.fullname}</a>
                           </h2>
                         </td>
-                        <td>Dental</td>
+                        <td>{doctor.specialize}</td>
                         <td>$3200.00</td>
-                      </tr>
-                      <tr>
                         <td>
-                          <h2 className="table-avatar">
-                            <a
-                              href="profile.html"
-                              className="avatar avatar-sm mr-2"
-                            >
-                              <img
-                                className="avatar-img rounded-circle"
-                                src="../img/doctors/doctor-thumb-02.jpg"
-                                alt="User Image"
-                              />
-                            </a>
-                            <a href="profile.html">Dr. Darren Elder</a>
-                          </h2>
+                          <i className="fe fe-star text-warning" />
+                          <i className="fe fe-star text-warning" />
+                          <i className="fe fe-star text-warning" />
+                          <i className="fe fe-star text-warning" />
+                          <i className="fe fe-star-o text-secondary" />
                         </td>
-                        <td>Dental</td>
-                        <td>$3100.00</td>
                       </tr>
-                      <tr>
-                        <td>
-                          <h2 className="table-avatar">
-                            <a
-                              href="profile.html"
-                              className="avatar avatar-sm mr-2"
-                            >
-                              <img
-                                className="avatar-img rounded-circle"
-                                src="../img/doctors/doctor-thumb-03.jpg"
-                                alt="User Image"
-                              />
-                            </a>
-                            <a href="profile.html">Dr. Deborah Angel</a>
-                          </h2>
-                        </td>
-                        <td>Cardiology</td>
-                        <td>$4000.00</td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <h2 className="table-avatar">
-                            <a
-                              href="profile.html"
-                              className="avatar avatar-sm mr-2"
-                            >
-                              <img
-                                className="avatar-img rounded-circle"
-                                src="../img/doctors/doctor-thumb-04.jpg"
-                                alt="User Image"
-                              />
-                            </a>
-                            <a href="profile.html">Dr. Sofia Brient</a>
-                          </h2>
-                        </td>
-                        <td>Urology</td>
-                        <td>$3200.00</td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <h2 className="table-avatar">
-                            <a
-                              href="profile.html"
-                              className="avatar avatar-sm mr-2"
-                            >
-                              <img
-                                className="avatar-img rounded-circle"
-                                src="../img/doctors/doctor-thumb-05.jpg"
-                                alt="User Image"
-                              />
-                            </a>
-                            <a href="profile.html">Dr. Marvin Campbell</a>
-                          </h2>
-                        </td>
-                        <td>Orthopaedics</td>
-                        <td>$3500.00</td>
-                      </tr>
+                      ))}
+                      
                     </tbody>
                   </table>
                 </div>
@@ -223,117 +169,37 @@ export default function Dashboard() {
                 <h4 className="card-title">Patients List</h4>
               </div>
               <div className="card-body">
-                <div className="table-responsive">
+                <div className="table-responsive" style={{ overflowX: 'auto', maxHeight: '400px' }}>
                   <table className="table table-hover table-center mb-0">
                     <thead>
                       <tr>
                         <th>Patient Name</th>
                         <th>Phone</th>
-                        <th>Last Visit</th>
                         <th>Paid</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>
-                          <h2 className="table-avatar">
-                            <a
-                              href="profile.html"
-                              className="avatar avatar-sm mr-2"
-                            >
-                              <img
-                                className="avatar-img rounded-circle"
-                                src="../img/patients/patient1.jpg"
-                                alt="User Image"
-                              />
-                            </a>
-                            <a href="profile.html">Charlene Reed </a>
-                          </h2>
-                        </td>
-                        <td>8286329170</td>
-                        <td>20 Oct 2019</td>
-                        <td className="text-right">$100.00</td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <h2 className="table-avatar">
-                            <a
-                              href="profile.html"
-                              className="avatar avatar-sm mr-2"
-                            >
-                              <img
-                                className="avatar-img rounded-circle"
-                                src="../img/patients/patient2.jpg"
-                                alt="User Image"
-                              />
-                            </a>
-                            <a href="profile.html">Travis Trimble </a>
-                          </h2>
-                        </td>
-                        <td>2077299974</td>
-                        <td>22 Oct 2019</td>
-                        <td className="text-right">$200.00</td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <h2 className="table-avatar">
-                            <a
-                              href="profile.html"
-                              className="avatar avatar-sm mr-2"
-                            >
-                              <img
-                                className="avatar-img rounded-circle"
-                                src="../img/patients/patient3.jpg"
-                                alt="User Image"
-                              />
-                            </a>
-                            <a href="profile.html">Carl Kelly</a>
-                          </h2>
-                        </td>
-                        <td>2607247769</td>
-                        <td>21 Oct 2019</td>
-                        <td className="text-right">$250.00</td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <h2 className="table-avatar">
-                            <a
-                              href="profile.html"
-                              className="avatar avatar-sm mr-2"
-                            >
-                              <img
-                                className="avatar-img rounded-circle"
-                                src="../img/patients/patient4.jpg"
-                                alt="User Image"
-                              />
-                            </a>
-                            <a href="profile.html"> Michelle Fairfax</a>
-                          </h2>
-                        </td>
-                        <td>5043686874</td>
-                        <td>21 Sep 2019</td>
-                        <td className="text-right">$150.00</td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <h2 className="table-avatar">
-                            <a
-                              href="profile.html"
-                              className="avatar avatar-sm mr-2"
-                            >
-                              <img
-                                className="avatar-img rounded-circle"
-                                src="../img/patients/patient5.jpg"
-                                alt="User Image"
-                              />
-                            </a>
-                            <a href="profile.html">Gina Moore</a>
-                          </h2>
-                        </td>
-                        <td>9548207887</td>
-                        <td>18 Sep 2019</td>
-                        <td className="text-right">$350.00</td>
-                      </tr>
+                      {patientList?.map((patient) => (
+                        <tr>
+                          <td>
+                            <h2 className="table-avatar">
+                              <a
+                                href="profile.html"
+                                className="avatar avatar-sm mr-2"
+                              >
+                                <img
+                                  className="avatar-img rounded-circle"
+                                  src="../img/patients/patient1.jpg"
+                                  alt="User Image"
+                                />
+                              </a>
+                              <a href="profile.html">{patient.fullname}</a>
+                            </h2>
+                          </td>
+                          <td>{patient.phoneNumber}</td>
+                          <td className="text-right">$100.00</td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
@@ -350,7 +216,7 @@ export default function Dashboard() {
                 <h4 className="card-title">Appointment List</h4>
               </div>
               <div className="card-body">
-                <div className="table-responsive">
+                <div className="table-responsive" style={{ overflowX: 'auto', maxHeight: '400px' }}>
                   <table className="table table-hover table-center mb-0">
                     <thead>
                       <tr>

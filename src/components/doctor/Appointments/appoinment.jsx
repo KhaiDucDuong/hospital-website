@@ -39,10 +39,10 @@ export default function Appointment({ appointment }) {
           >
             <i className="far fa-eye" /> View
           </a>
-          <a href="javascript:void(0);" className="btn btn-sm bg-success-light">
+          <a  className="btn btn-sm bg-success-light">
             <i className="fas fa-check" /> Accept
           </a>
-          <a href="javascript:void(0);" className="btn btn-sm bg-danger-light">
+          <a  className="btn btn-sm bg-danger-light">
             <i className="fas fa-times" /> Cancel
           </a>
         </div>
