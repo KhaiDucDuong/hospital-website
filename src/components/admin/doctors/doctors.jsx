@@ -1,4 +1,86 @@
-export default function Doctors({ selectedWidget, setSelectedWidget }) {
+import { useState, useEffect } from "react";
+import { Modal, Card } from "react-bootstrap";
+import { createDoctor, deleteDoctor } from "../../../services/DoctorService";
+
+export default function Doctors(props) {
+  const [doctorList, setDoctorList] = useState([]);
+  useEffect(() => {
+    setDoctorList(props.doctors);
+  }, []);
+
+
+  const [openModalEdit, setOpenModalEdit] = useState(false);
+  const [openModalView, setOpenModalView] = useState(false);
+  const [selectedDoctor, setSelectedDoctor] = useState();
+  const [openModalAdd, setOpenModalAdd] = useState(false);
+
+  const openModal = (doctor) => {
+    setSelectedDoctor(doctor);
+    setOpenModalView(true);
+  }
+
+  const openEditModal = (doctor) => {
+    setSelectedDoctor(doctor);
+    setOpenModalEdit(true);
+  }
+
+  const handleAddSubmit = async (e) => {
+    e.preventDefault();
+    try{
+      //console.log(e.target.fullName.value);
+      const newDoctor = {
+        "deparmentId": null,
+        "fullname": e.target.fullName.value,
+        "gender": e.target.gender.checked,
+        "dateOfbirth": "2003-05-15T00:00:00.000+00:00",
+        "phoneNumber": e.target.phone.value,
+        "specialize": e.target.specialize.value,
+        "description": e.target.description.value,
+        "availableFlag": true,
+        "isDeleted": false
+      };
+
+      //console.log(newDoctor);
+      await createDoctor(newDoctor);
+      
+      const newDoctorList = [...doctorList, newDoctor];
+      setDoctorList(newDoctorList);
+
+      setOpenModalAdd(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleDelete = async (doctor) => {
+
+    try{
+      //console.log(e.target.fullName.value);
+      const deletedDoctor = {
+        "_id": doctor._id,
+        "deparmentId": null,
+        "fullname": doctor.fullname,
+        "gender": doctor.gender,
+        "dateOfbirth": doctor.dateOfbirth,
+        "phoneNumber": doctor.phoneNumber,
+        "specialize": doctor.specialize,
+        "description": doctor.description,
+        "availableFlag": true,
+        "isDeleted": false
+      };
+
+      //console.log(deletedDoctor);
+      await deleteDoctor(deletedDoctor);
+      
+      const newDoctorList = doctorList.filter((doctor) => doctor._id != deletedDoctor._id);
+      setDoctorList(newDoctorList);
+
+      // setOpenModalAdd(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className="page-wrapper">
       <div className="content container-fluid">
@@ -15,17 +97,18 @@ export default function Doctors({ selectedWidget, setSelectedWidget }) {
               </ul>
             </div>
             <div className="col-sm-5 col">
+              {/* Di chuyển nút Add vào đây */}
               <a
-                href="#Add_Specialities_details"
+                className="btn btn-primary btn-md float-right mt-2"
                 data-toggle="modal"
-                className={"btn btn-primary float-right mt-2"+(selectedWidget === "addDoctors" && "active")}
-                onClick={() => setSelectedWidget("addDoctors")}
-              >
-                Add
+                onClick={() => setOpenModalAdd(true)}
+                >
+                  Add new
               </a>
             </div>
           </div>
         </div>
+        {/* /Page Header */}
         <div className="row">
           <div className="col-sm-12">
             <div className="card">
@@ -34,16 +117,17 @@ export default function Doctors({ selectedWidget, setSelectedWidget }) {
                   <table className="datatable table table-hover table-center mb-0">
                     <thead>
                       <tr>
+                        <th>ID</th>
                         <th>Doctor Name</th>
                         <th>Speciality</th>
-                        <th>Member Since</th>
                         <th>Earned</th>
-                        <th>Account Status</th>
-                        <th>Action</th>
+                        <th className="text-right">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
+                      {doctorList?.map((doctor) => doctor.isDeleted ? null : (
+                        <tr>
+                        <td>1</td>
                         <td>
                           <h2 className="table-avatar">
                             <a
@@ -56,448 +140,205 @@ export default function Doctors({ selectedWidget, setSelectedWidget }) {
                                 alt="User Image"
                               />
                             </a>
-                            <a href="profile.html">Dr. Ruby Perrin</a>
+                            <a href="profile.html">{doctor.fullname}</a>
                           </h2>
                         </td>
-                        <td>Dental</td>
-                        <td>
-                          14 Jan 2019 <br />
-                          <small>02.59 AM</small>
-                        </td>
+                        <td>{doctor.specialize}</td>
                         <td>$3100.00</td>
-                        <td>
-                          <div className="status-toggle">
-                            <input
-                              type="checkbox"
-                              id="status_1"
-                              className="check"
-                              defaultChecked=""
-                            />
-                            <label htmlFor="status_1" className="checktoggle">
-                              checkbox
-                            </label>
-                          </div>
-                        </td>
-                        <td>
-                          <a
-                            href="#"
-                            className={"btn btn-sm bg-success-light " + (selectedWidget === "editDoctors" && "active")}
-                            onClick={()=>{setSelectedWidget("editDoctors")}}
-                            data-toggle="modal"
-                          >
-                            <i className="fe fe-pencil" /> Edit
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <h2 className="table-avatar">
-                            <a
-                              href="profile.html"
-                              className="avatar avatar-sm mr-2"
-                            >
-                              <img
-                                className="avatar-img rounded-circle"
-                                src="../img/doctors/doctor-thumb-02.jpg"
-                                alt="User Image"
-                              />
-                            </a>
-                            <a href="profile.html">Dr. Darren Elder</a>
-                          </h2>
-                        </td>
-                        <td>Dental</td>
-                        <td>
-                          11 Jun 2019 <br />
-                          <small>4.50 AM</small>
-                        </td>
-                        <td>$5000.00</td>
-                        <td>
-                          <div className="status-toggle">
-                            <input
-                              type="checkbox"
-                              id="status_1"
-                              className="check"
-                              defaultChecked=""
-                            />
-                            <label htmlFor="status_1" className="checktoggle">
-                              checkbox
-                            </label>
-                          </div>
-                        </td>
-                        <td>
-                          <a
-                            href="#"
-                            className="btn btn-sm bg-success-light"
-                            data-toggle="modal"
-                          >
-                            <i className="fe fe-pencil" /> Edit
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <h2 className="table-avatar">
-                            <a
-                              href="profile.html"
-                              className="avatar avatar-sm mr-2"
-                            >
-                              <img
-                                className="avatar-img rounded-circle"
-                                src="../img/doctors/doctor-thumb-03.jpg"
-                                alt="User Image"
-                              />
-                            </a>
-                            <a href="profile.html">Dr. Deborah Angel</a>
-                          </h2>
-                        </td>
-                        <td>Cardiology</td>
-                        <td>
-                          4 Jan 2018 <br />
-                          <small>9.40 AM</small>
-                        </td>
-                        <td>$3300.00</td>
-                        <td>
-                          <div className="status-toggle">
-                            <input
-                              type="checkbox"
-                              id="status_1"
-                              className="check"
-                              defaultChecked=""
-                            />
-                            <label htmlFor="status_1" className="checktoggle">
-                              checkbox
-                            </label>
-                          </div>
-                        </td>
-                        <td>
-                          <a
-                            href="#"
-                            className="btn btn-sm bg-success-light"
-                            data-toggle="modal"
-                          >
-                            <i className="fe fe-pencil" /> Edit
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <h2 className="table-avatar">
-                            <a
-                              href="profile.html"
-                              className="avatar avatar-sm mr-2"
-                            >
-                              <img
-                                className="avatar-img rounded-circle"
-                                src="../img/doctors/doctor-thumb-04.jpg"
-                                alt="User Image"
-                              />
-                            </a>
-                            <a href="profile.html">Dr. Sofia Brient</a>
-                          </h2>
-                        </td>
-                        <td>Urology</td>
-                        <td>
-                          5 Jul 2019 <br />
-                          <small>12.59 AM</small>
-                        </td>
-                        <td>$3500.00</td>
-                        <td>
-                          <div className="status-toggle">
-                            <input
-                              type="checkbox"
-                              id="status_1"
-                              className="check"
-                              defaultChecked=""
-                            />
-                            <label htmlFor="status_1" className="checktoggle">
-                              checkbox
-                            </label>
-                          </div>
-                        </td>
-                        <td>
-                          <a
-                            href="#"
-                            className="btn btn-sm bg-success-light"
-                            data-toggle="modal"
-                          >
-                            <i className="fe fe-pencil" /> Edit
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <h2 className="table-avatar">
-                            <a
-                              href="profile.html"
-                              className="avatar avatar-sm mr-2"
-                            >
-                              <img
-                                className="avatar-img rounded-circle"
-                                src="../img/doctors/doctor-thumb-05.jpg"
-                                alt="User Image"
-                              />
-                            </a>
-                            <a href="profile.html">Dr. Marvin Campbell</a>
-                          </h2>
-                        </td>
-                        <td>Orthopaedics</td>
-                        <td>
-                          24 Jan 2019 <br />
-                          <small>02.59 AM</small>
-                        </td>
-                        <td>$3700.00</td>
-                        <td>
-                          <div className="status-toggle">
-                            <input
-                              type="checkbox"
-                              id="status_1"
-                              className="check"
-                              defaultChecked=""
-                            />
-                            <label htmlFor="status_1" className="checktoggle">
-                              checkbox
-                            </label>
-                          </div>
-                        </td>
-                        <td>
-                          <a
-                            href="#"
-                            className="btn btn-sm bg-success-light"
-                            data-toggle="modal"
-                          >
-                            <i className="fe fe-pencil" /> Edit
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <h2 className="table-avatar">
-                            <a
-                              href="profile.html"
-                              className="avatar avatar-sm mr-2"
-                            >
-                              <img
-                                className="avatar-img rounded-circle"
-                                src="../img/doctors/doctor-thumb-06.jpg"
-                                alt="User Image"
-                              />
-                            </a>
-                            <a href="profile.html">Dr. Katharine Berthold</a>
-                          </h2>
-                        </td>
-                        <td>Orthopaedics</td>
-                        <td>
-                          23 Mar 2019 <br />
-                          <small>02.50 PM</small>
-                        </td>
-                        <td>$4000.00</td>
-                        <td>
-                          <div className="status-toggle">
-                            <input
-                              type="checkbox"
-                              id="status_1"
-                              className="check"
-                              defaultChecked=""
-                            />
-                            <label htmlFor="status_1" className="checktoggle">
-                              checkbox
-                            </label>
-                          </div>
-                        </td>
-                        <td>
-                          <a
-                            href="#"
-                            className="btn btn-sm bg-success-light"
-                            data-toggle="modal"
-                          >
-                            <i className="fe fe-pencil" /> Edit
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <h2 className="table-avatar">
-                            <a
-                              href="profile.html"
-                              className="avatar avatar-sm mr-2"
-                            >
-                              <img
-                                className="avatar-img rounded-circle"
-                                src="../img/doctors/doctor-thumb-07.jpg"
-                                alt="User Image"
-                              />
-                            </a>
-                            <a href="profile.html">Dr. Linda Tobin</a>
-                          </h2>
-                        </td>
-                        <td>Neurology</td>
-                        <td>
-                          14 Dec 2018 <br />
-                          <small>01.59 AM</small>
-                        </td>
-                        <td>$2000.00</td>
-                        <td>
-                          <div className="status-toggle">
-                            <input
-                              type="checkbox"
-                              id="status_1"
-                              className="check"
-                              defaultChecked=""
-                            />
-                            <label htmlFor="status_1" className="checktoggle">
-                              checkbox
-                            </label>
-                          </div>
-                        </td>
-                        <td>
+                        <td className="text-right">
                           {/* Nút edit */}
                           <a
-                            href="#"
-                            className="btn btn-sm bg-success-light"
-                            data-toggle="modal"
-                          >
-                            <i className="fe fe-pencil" /> Edit
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <h2 className="table-avatar">
-                            <a
-                              href="profile.html"
-                              className="avatar avatar-sm mr-2"
+                              className="btn btn-sm bg-success-light mx-2"
+                              data-toggle="modal"
+                              onClick={() => openModal(doctor)}
                             >
-                              <img
-                                className="avatar-img rounded-circle"
-                                src="../img/doctors/doctor-thumb-08.jpg"
-                                alt="User Image"
-                              />
+                              <i className="fe fe-pencil" /> View
                             </a>
-                            <a href="profile.html">Dr. Paul Richard</a>
-                          </h2>
-                        </td>
-                        <td>Dermatology</td>
-                        <td>
-                          11 Jan 2019 <br />
-                          <small>02.59 AM</small>
-                        </td>
-                        <td>$3000.00</td>
-                        <td>
-                          <div className="status-toggle">
-                            <input
-                              type="checkbox"
-                              id="status_1"
-                              className="check"
-                              defaultChecked=""
-                            />
-                            <label htmlFor="status_1" className="checktoggle">
-                              checkbox
-                            </label>
-                          </div>
-                        </td>
-                        <td>
-                          {/* Nút edit */}
-                          <a
-                            href="#"
-                            className="btn btn-sm bg-success-light"
-                            data-toggle="modal"
-                          >
-                            <i className="fe fe-pencil" /> Edit
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <h2 className="table-avatar">
                             <a
-                              href="profile.html"
-                              className="avatar avatar-sm mr-2"
+                              data-toggle="modal"
+                              className="btn btn-sm bg-primary-light mx-2"
+                              onClick={() => openEditModal(doctor)}
                             >
-                              <img
-                                className="avatar-img rounded-circle"
-                                src="../img/doctors/doctor-thumb-09.jpg"
-                                alt="User Image"
-                              />
+                              <i className="fe fe-edit" /> Edit
                             </a>
-                            <a href="profile.html">Dr. John Gibbs</a>
-                          </h2>
-                        </td>
-                        <td>Dental</td>
-                        <td>
-                          21 Apr 2018 <br />
-                          <small>02.59 PM</small>
-                        </td>
-                        <td>$4100.00</td>
-                        <td>
-                          <div className="status-toggle">
-                            <input
-                              type="checkbox"
-                              id="status_1"
-                              className="check"
-                              defaultChecked=""
-                            />
-                            <label htmlFor="status_1" className="checktoggle">
-                              checkbox
-                            </label>
-                          </div>
-                        </td>
-                        <td>
-                          {/* Nút edit */}
-                          <a
-                            href="#"
-                            className="btn btn-sm bg-success-light"
-                            data-toggle="modal"
-                          >
-                            <i className="fe fe-pencil" /> Edit
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <h2 className="table-avatar">
                             <a
-                              href="profile.html"
-                              className="avatar avatar-sm mr-2"
+                              data-toggle="modal"
+                              className="btn btn-sm bg-danger-light"
+                              onClick={() => handleDelete(doctor)}
                             >
-                              <img
-                                className="avatar-img rounded-circle"
-                                src="../img/doctors/doctor-thumb-10.jpg"
-                                alt="User Image"
-                              />
+                              <i className="fe fe-trash" /> Delete
                             </a>
-                            <a href="profile.html">Dr. Olga Barlow</a>
-                          </h2>
-                        </td>
-                        <td>Dental</td>
-                        <td>
-                          15 Feb 2018 <br />
-                          <small>03.59 AM</small>
-                        </td>
-                        <td>$3500.00</td>
-                        <td>
-                          <div className="status-toggle">
-                            <input
-                              type="checkbox"
-                              id="status_1"
-                              className="check"
-                              defaultChecked=""
-                            />
-                            <label htmlFor="status_1" className="checktoggle">
-                              checkbox
-                            </label>
-                          </div>
-                        </td>
-                        <td>
-                          {/* Nút edit */}
-                          <a
-                            href="#"
-                            className="btn btn-sm bg-success-light"
-                            data-toggle="modal"
-                          >
-                            <i className="fe fe-pencil" /> Edit
-                          </a>
                         </td>
                       </tr>
+                        
+                      ))}
+                      
+                      {openModalEdit && 
+                        <Modal
+                        show={openModalEdit}
+                        onHide={() => setOpenModalEdit(false)}
+                        dialogClassName="modal-90w"
+                        aria-labelledby="example-custom-modal-styling-title"
+                      >
+                        <Modal.Header closeButton>
+                          <Modal.Title id="example-custom-modal-styling-title">
+                            Edit doctor profile
+                          </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          <Card>
+                            <Card.Body>
+                              <form action="#">
+                                <div className="form-group">
+                                  <label>Fullname</label>
+                                  <input type="text" className="form-control fulName" value={selectedDoctor.fullname}/>
+                                </div>
+                                <div className="form-check form-check-inline">
+                                  <input
+                                    className="form-check-input"
+                                    type="radio"
+                                    name="flexRadioDefault"
+                                    id="flexRadioDefault1"
+                                    checked={selectedDoctor.gender ? true : false}
+                                  />
+                                  <label className="form-check-label" htmlFor="flexRadioDefault1">
+                                    Female
+                                  </label>
+                                </div>
+                                <div className="form-check form-check-inline mb-3">
+                                  <input
+                                    className="form-check-input"
+                                    type="radio"
+                                    name="flexRadioDefault gender"
+                                    id="flexRadioDefault2"
+                                    
+                                    checked={selectedDoctor.gender ? false : true}
+                                  />
+                                  <label className="form-check-label" htmlFor="flexRadioDefault2">
+                                    Male
+                                  </label>
+                                </div>
+                                <div className="form-group">
+                                  <label>Phone</label>
+                                  <input type="text" className="form-control phone" value={selectedDoctor.phoneNumber}/>
+                                </div>
+                                <div className="form-group">
+                                  <label>Specialize</label>
+                                  <input type="text" className="form-control specialize" value={selectedDoctor.specialize}/>
+                                </div>
+                                <div className="form-group">
+                                  <label>Description</label>
+                                  <textarea className="form-control description" id="" rows="3" value={selectedDoctor.description}></textarea>
+                                </div>
+                                <div className="text-right">
+                                  <button type="submit" className="btn btn-primary">
+                                    Change
+                                  </button>
+                                </div>
+                              </form>
+                            </Card.Body>
+                          </Card>
+                        </Modal.Body>
+                      </Modal>}
+
+                      {openModalView &&
+                        <Modal
+                        show={openModalView}
+                        onHide={() => setOpenModalView(false)}
+                        dialogClassName="modal-90w"
+                        aria-labelledby="example-custom-modal-styling-title"
+                      >
+                        <Modal.Header closeButton>
+                          <Modal.Title id="example-custom-modal-styling-title">
+                            Doctor profile
+                          </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          <Card>
+                            <Card.Body>
+                              <Card.Title>{selectedDoctor.fullname}</Card.Title>
+                                <Card.Text>
+                                  {selectedDoctor.specialize}
+                                </Card.Text>
+                                <Card.Text>
+                                  {selectedDoctor.phoneNumber}
+                                </Card.Text>
+                                <Card.Text>
+                                  {selectedDoctor.description}
+                                </Card.Text>
+                              </Card.Body>
+                          </Card>
+                        </Modal.Body>
+                      </Modal>}
+                      
+                      {openModalAdd &&
+                        <Modal
+                        show={openModalAdd}
+                        onHide={() => setOpenModalAdd(false)}
+                        dialogClassName="modal-90w"
+                        aria-labelledby="example-custom-modal-styling-title"
+                      >
+                        <Modal.Header closeButton>
+                          <Modal.Title id="example-custom-modal-styling-title">
+                            Add new doctor
+                          </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          <Card>
+                            <Card.Body>
+                              <form onSubmit={handleAddSubmit}>
+                                <div className="form-group">
+                                  <label>Full Name</label>
+                                  <input type="text" className="form-control" name="fullName"/>
+                                </div>
+                                <div className="form-check form-check-inline">
+                                  <input
+                                    className="form-check-input flexRadioDefault"
+                                    type="radio"
+                                    id="flexRadioDefault1"
+                                    value="Male"
+                                    name="gender"
+                                  />
+                                  <label className="form-check-label" htmlFor="flexRadioDefault1">
+                                    Male
+                                  </label>
+                                </div>
+                                <div className="form-check form-check-inline mb-3 gender">
+                                  <input
+                                    className="form-check-input"
+                                    type="radio"
+                                    name="flexRadioDefault"
+                                    id="flexRadioDefault2"
+                                    value="Female"
+                                    defaultChecked=""
+                                  />
+                                  <label className="form-check-label" htmlFor="flexRadioDefault2">
+                                    Female
+                                  </label>
+                                </div>
+                                <div className="form-group">
+                                  <label>Phone</label>
+                                  <input type="text" className="form-control" name="phone"/>
+                                </div>
+                                <div className="form-group">
+                                  <label>Specialize</label>
+                                  <input type="text" className="form-control" name="specialize"/>
+                                </div>
+                                <div className="form-group">
+                                  <label>Description</label>
+                                  <textarea className="form-control description" name="description" id="" rows="3"></textarea>
+                                </div>
+                                <div className="text-right">
+                                  <button type="submit" className="btn btn-primary">
+                                    Submit
+                                  </button>
+                                </div>
+                              </form>
+                            </Card.Body>
+                          </Card>
+                        </Modal.Body>
+                      </Modal>}
+
                     </tbody>
                   </table>
                 </div>

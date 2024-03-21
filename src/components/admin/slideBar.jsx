@@ -47,6 +47,14 @@ export default function SlideBar({ selectedWidget, setSelectedWidget }) {
                 <i className="fe fe-user" /> <span>Patients</span>
               </a>
             </li>
+            <li
+             className={selectedWidget == "reviews" && "active"}
+             onClick={() => setSelectedWidget("reviews")}
+            >
+              <a className="sidebar-items">
+                <i className="fe fe-star-o" /> <span>Reviews</span>
+              </a>
+            </li>
           </ul>
         </div>
       </div>
