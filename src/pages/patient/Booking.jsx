@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import MyCalendar from "./Calendar";
@@ -8,6 +8,24 @@ import { useLocation } from "react-router-dom";
 function Booking({ isLoggedIn }) {
   const locationData = useLocation();
   let doctor = locationData.state.doctor;
+  console.log(doctor)
+
+  useEffect(() => {
+    const url = "http://localhost:8080/schedules/listSchedule/" + doctor._id;
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url, {
+          Header: "GET",
+        });
+        const data = await response.json();    
+        console.log(data)  
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    fetchData();
+  }, []);
+
 
   return (
     <>
