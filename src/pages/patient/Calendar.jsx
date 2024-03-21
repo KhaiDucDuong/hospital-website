@@ -7,18 +7,59 @@ import Modal from "react-bootstrap/Modal";
 
 const MyCalendar = ({schedulesData}) => {
   const [showForm, setShowForm] = useState(false);
-  const [startTime, setStartTime] = useState("")
-  const [endTime, setEndTime] = useState("")
-  const [symtomDescription, setSymtomDescription] = useState("")
-  const [id, setId] = useState();
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+  const [symtomDescription, setSymtomDescription] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [scheduleId, setId] = useState("");
+
   const schedules = schedulesData;
 
   const handleClose = () => setShowForm(false);
-  function handleShow (dateClickInfo) {
-    console.log("Date:" + dateClickInfo.date)
-    setStartTime(dateClickInfo.date.getHours())
-    setEndTime(dateClickInfo.date.getHours() + 1)
+  function handleShow(dateClickInfo) {
+    console.log("Date:" + dateClickInfo.date);
+    console.log("Date Str:" + dateClickInfo.dateStr);
+    setStartTime(dateClickInfo.date.getHours() + ":00");
+    setEndTime(dateClickInfo.date.getHours() + 1 + ":00");
+    console.log(startTime);
+
+    setSelectedDate(
+      dateClickInfo.date.getYear() -
+        100 +
+        2000 +
+        "-" +
+        (dateClickInfo.date.getMonth() + 1) +
+        "-" +
+        dateClickInfo.date.getDate()
+    );
     setShowForm(true);
+  }
+
+  const submitObClick = async () => {
+    const url = "http://localhost:8080/appointment/booking/" + scheduleId;
+
+    const requestOptions = {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        date: selectedDate,
+        time: startTime,
+        symptomDescription: symtomDescription,
+      }),
+    };
+    try {
+      let response = await fetch(url, requestOptions);
+      let data = await response.json();
+      if (response.status === 201) {
+        console.log("Create appointment successfully!");
+      } else {
+        console.log("Failed to create appointment!");
+      }
+      console.log(data);
+    } catch (e) {
+      console.log("error", e);
+    }
   };
 
   const formatDate = (date) => {
@@ -64,6 +105,7 @@ const MyCalendar = ({schedulesData}) => {
 
   return (
     <>
+
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
         initialView="timeGridWeek"
@@ -80,12 +122,10 @@ const MyCalendar = ({schedulesData}) => {
         }}
         allDaySlot={false}
         height={"auto"}
+        eventClick={(info) => handleEventClick(info)}
         dateClick={( dateClickInfo ) => handleShow( dateClickInfo )} // Directly pass the function with date argument
-        eventClick={( info ) => handleEventClick( info )}
-      />
-
+/>
       {showForm && (
-        <>
           <Modal show={showForm} onHide={handleClose}>
             <Modal.Header closeButton>
               <Modal.Title>Make an appointment</Modal.Title>
@@ -94,48 +134,53 @@ const MyCalendar = ({schedulesData}) => {
             <Modal.Body>
               <form action="#">
                 <div className="form-group row">
+                  <label className="col-lg-3 col-form-label">Date</label>
+                  <div className="col-lg-9">
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={selectedDate}
+                      disabled
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group row">
                   <label className="col-lg-3 col-form-label">Start Time</label>
                   <div className="col-lg-9">
-                    <input type="text" className="form-control" value={startTime + " - " + endTime}  disabled/>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={startTime + " - " + endTime}
+                      disabled
+                    />
                   </div>
                 </div>
                 <div className="form-group row">
                   <label className="col-lg-3 col-form-label">
-                    Email Address
+                    Symtom Description
                   </label>
                   <div className="col-lg-9">
-                    <input type="email" className="form-control" />
-                  </div>
-                </div>
-                <div className="form-group row">
-                  <label className="col-lg-3 col-form-label">Username</label>
-                  <div className="col-lg-9">
-                    <input type="text" className="form-control" />
-                  </div>
-                </div>
-                <div className="form-group row">
-                  <label className="col-lg-3 col-form-label">Password</label>
-                  <div className="col-lg-9">
-                    <input type="password" className="form-control" />
-                  </div>
-                </div>
-                <div className="form-group row">
-                  <label className="col-lg-3 col-form-label">
-                    Repeat Password
-                  </label>
-                  <div className="col-lg-9">
-                    <input type="password" className="form-control" />
+                    <input
+                      type="textarea"
+                      onChange={(e) => setSymtomDescription(e.target.value)}
+                      className="form-control"
+                    />
                   </div>
                 </div>
                 <div className="text-right">
-                  <button type="submit" className="btn btn-primary">
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    onClick={() => submitObClick()}
+                  >
                     Submit
                   </button>
                 </div>
               </form>
             </Modal.Body>
           </Modal>
-        </>
+
       )}
     </>
   );
