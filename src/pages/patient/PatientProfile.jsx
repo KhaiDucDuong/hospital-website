@@ -26,7 +26,7 @@ const PatientProfile = ({ isLoggedIn, setLoggedIn }) => {
     }, []);
     function Checkstatus(integer){
         if (integer == 1){
-        return "Book"}
+        return "Booked"}
         if (integer == 0)
         {return "Canceled"}
         else {return "Closed"}
