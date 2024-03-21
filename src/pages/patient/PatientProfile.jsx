@@ -192,7 +192,7 @@ const PatientProfile = ({ isLoggedIn, setLoggedIn }) => {
                                             <span className="d-block text-info">
                                             </span>
                                         </td>
-                                        <td>12 Nov 2024</td>
+                                        <td>{moment(app.appointmentDate).format("DD-MM-YYYY")}</td>
                                         <td>
                                             <span className="badge badge-pill bg-success-light">
                                             {Checkstatus(app.status)}

@@ -5,11 +5,11 @@ import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import Modal from "react-bootstrap/Modal";
 
-const MyCalendar = ({schedulesData}) => {
+const MyCalendar = ({ schedulesData }) => {
   const [showForm, setShowForm] = useState(false);
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
-  const [symtomDescription, setSymtomDescription] = useState("");
+  const [symptomDescription, setSymtomDescription] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [scheduleId, setId] = useState("");
 
@@ -24,28 +24,28 @@ const MyCalendar = ({schedulesData}) => {
     console.log(startTime);
 
     setSelectedDate(
-      dateClickInfo.date.getYear() -
-        100 +
-        2000 +
-        "-" +
-        (dateClickInfo.date.getMonth() + 1) +
-        "-" +
-        dateClickInfo.date.getDate()
+      String(
+        dateClickInfo.date.getYear() -
+          100 +
+          2000 +
+          "-" +
+          (dateClickInfo.date.getMonth() + 1) +
+          "-" +
+          dateClickInfo.date.getDate()
+      )
     );
     setShowForm(true);
   }
 
   const submitObClick = async () => {
     const url = "http://localhost:8080/appointment/booking/" + scheduleId;
-
     const requestOptions = {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        date: selectedDate,
-        time: startTime,
-        symptomDescription: symtomDescription,
+        appointmentDate: new Date(selectedDate),
+        symptomDescription: symptomDescription,
       }),
     };
     try {
@@ -68,35 +68,62 @@ const MyCalendar = ({schedulesData}) => {
 
   const handleEventClick = (info) => {
     setId(info.event._def.publicId);
+    // console.log(info.event)
+    console.log(scheduleId);
+    setStartTime(info.event.start.getHours() + ":00");
+    setEndTime(info.event.start.getHours() + 1 + ":00");
+    setSelectedDate(
+      String(
+        info.event.start.getYear() -
+          100 +
+          2000 +
+          "-" +
+          (info.event.start.getMonth() + 1) +
+          "-" +
+          info.event.start.getDate()
+      )
+    );
     setShowForm(true);
-  }
+  };
   const generateScheduleList = (schedules) => {
+    console.log(schedules)
     let currentDay = new Date(); // Get current day
-    const daysOfWeek = ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const day = (currentDay.getFullYear() + "-" + (currentDay.getMonth() + 1) + "-" + (currentDay.getDate() + 3));
+    const daysOfWeek = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    const day =
+      currentDay.getFullYear() +
+      "-" +
+      (currentDay.getMonth() + 1) +
+      "-" +
+      (currentDay.getDate() + 3);
     // Initialize the list
 
     const scheduleList = [];
     // Loop through each schedule
-    schedules?.forEach(schedule => {
-
+    schedules?.forEach((schedule) => {
       //Find the index of the provided dayOfWeek
       const index = daysOfWeek.indexOf(schedule.dateOfweek);
-  
+
       // Calculate date for each day in the week based on the provided dayOfWeek
-        const date = new Date(day); // Create a new date object
-        const title = schedule.availableFlag ? "Booking" : "Booked";
-        const color = title==="Booking" ? "green" : "red";
-        const id = schedule._id;
-        date.setDate(currentDay.getDate() + index); // Set the date based on the current day and the offset
-        let time = schedule.time.slice(0, 5);
-        if (time[4] === " "){
-          time = time.slice(0, 4);
-          time = "0" + time;
-        }
-        let fomat = formatDate(date).slice(0, 11) + time + ":00";
-        scheduleList.push({ title, date: fomat, id: id, color: color}); // Push schedule with title and formatted date to the list
-      
+      const date = new Date(day); // Create a new date object
+      const title = schedule.appointmentFlag ? "Booked" : "Available";
+      const color = title === "Available" ? "green" : "red";
+      const id = schedule._id;
+      date.setDate(currentDay.getDate() + index); // Set the date based on the current day and the offset
+      let time = schedule.time.slice(0, 5);
+      if (time[4] === " ") {
+        time = time.slice(0, 4);
+        time = "0" + time;
+      }
+      let fomat = formatDate(date).slice(0, 11) + time + ":00";
+      scheduleList.push({ title, date: fomat, id: id, color: color }); // Push schedule with title and formatted date to the list
     });
     return scheduleList;
   };
@@ -105,7 +132,6 @@ const MyCalendar = ({schedulesData}) => {
 
   return (
     <>
-
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
         initialView="timeGridWeek"
@@ -123,64 +149,63 @@ const MyCalendar = ({schedulesData}) => {
         allDaySlot={false}
         height={"auto"}
         eventClick={(info) => handleEventClick(info)}
-        dateClick={( dateClickInfo ) => handleShow( dateClickInfo )} // Directly pass the function with date argument
-/>
+        dateClick={(dateClickInfo) => handleShow(dateClickInfo)} // Directly pass the function with date argument
+      />
       {showForm && (
-          <Modal show={showForm} onHide={handleClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>Make an appointment</Modal.Title>
-            </Modal.Header>
+        <Modal show={showForm} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Make an appointment</Modal.Title>
+          </Modal.Header>
 
-            <Modal.Body>
-              <form action="#">
-                <div className="form-group row">
-                  <label className="col-lg-3 col-form-label">Date</label>
-                  <div className="col-lg-9">
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={selectedDate}
-                      disabled
-                    />
-                  </div>
-                </div>
+          <Modal.Body>
+            {/* <form> */}
+            <div className="form-group row">
+              <label className="col-lg-3 col-form-label">Date</label>
+              <div className="col-lg-9">
+                <input
+                  type="text"
+                  className="form-control"
+                  value={selectedDate}
+                  disabled
+                />
+              </div>
+            </div>
 
-                <div className="form-group row">
-                  <label className="col-lg-3 col-form-label">Start Time</label>
-                  <div className="col-lg-9">
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={startTime + " - " + endTime}
-                      disabled
-                    />
-                  </div>
-                </div>
-                <div className="form-group row">
-                  <label className="col-lg-3 col-form-label">
-                    Symtom Description
-                  </label>
-                  <div className="col-lg-9">
-                    <input
-                      type="textarea"
-                      onChange={(e) => setSymtomDescription(e.target.value)}
-                      className="form-control"
-                    />
-                  </div>
-                </div>
-                <div className="text-right">
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    onClick={() => submitObClick()}
-                  >
-                    Submit
-                  </button>
-                </div>
-              </form>
-            </Modal.Body>
-          </Modal>
-
+            <div className="form-group row">
+              <label className="col-lg-3 col-form-label">Start Time</label>
+              <div className="col-lg-9">
+                <input
+                  type="text"
+                  className="form-control"
+                  value={startTime + " - " + endTime}
+                  disabled
+                />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label className="col-lg-3 col-form-label">
+                Symtom Description
+              </label>
+              <div className="col-lg-9">
+                <input
+                  type="textarea"
+                  onChange={(e) => setSymtomDescription(e.target.value)}
+                  className="form-control"
+                />
+              </div>
+            </div>
+            <div className="text-right">
+              <button
+                type="submit"
+                className="btn btn-primary"
+                onClick={() => submitObClick()}
+              >
+                Submit
+              </button>
+            </div>
+            {/* </form> */}
+          </Modal.Body>
+        </Modal>
       )}
     </>
   );
