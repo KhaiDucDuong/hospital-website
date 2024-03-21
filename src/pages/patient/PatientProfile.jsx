@@ -2,24 +2,37 @@ import React from 'react'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import { useEffect, useState } from "react";
+import moment from 'moment';
 
 const PatientProfile = ({ isLoggedIn, setLoggedIn }) => {
     const [patient, setPatient] = useState("");
-
+    const [apppatient, setAppPatient] = useState([]);
     useEffect(() => {
         const url = "http://localhost:8080/patients/info";
+        const appurl = "http://localhost:8080/appointment/appointmentOrdered"
         const fetchData = async () => {
             try {
                 const response = await fetch(url, {Header: "GET", credentials: "include"});
                 const data = await response.json();
-                console.log(data);
+                const appresponse = await fetch(appurl, {Header: "GET", credentials: "include"});
+                const appdata = await appresponse.json();
                 setPatient(data)
+                setAppPatient(appdata)
             } catch (error) {
                 console.log("error", error);
             }
         };
         fetchData();
     }, []);
+    function Checkstatus(integer){
+        if (integer == 1){
+        return "Book"}
+        if (integer == 0)
+        {return "Canceled"}
+        else {return "Closed"}
+
+    }
+
     const genderString = patient.gender ? 'Male' : 'Female';
   return (
     <>
@@ -44,10 +57,10 @@ const PatientProfile = ({ isLoggedIn, setLoggedIn }) => {
                                 <h3>{patient.fullname}</h3>
                                 <div className="patient-details">
                                 <h5>
-                                    <b>Patient ID : {patient._id}</b>
+                                    <b>Date of birth : {moment(patient.dateOfBirth).format("DD-MM-YYYY")}</b>
                                 </h5>
                                 <h5 className="mb-0">
-                                    <i className="fas fa-map-marker-alt" />Gender : {genderString}
+                                    <i/>Gender : {genderString}
                                 </h5>
                                 </div>
                             </div>
@@ -60,9 +73,6 @@ const PatientProfile = ({ isLoggedIn, setLoggedIn }) => {
                             </li>
                             <li>
                                 Date of Birth <span>{new Date(patient.dateOfbirth).toDateString()}</span>
-                            </li>
-                            <li>
-                                Blood Group <span>AB+</span>
                             </li>
                             </ul>
                         </div>
@@ -159,45 +169,33 @@ const PatientProfile = ({ isLoggedIn, setLoggedIn }) => {
                                     <thead>
                                         <tr>
                                         <th>Doctor</th>
-                                        <th>Appt Date</th>
+                                        <th>Created At</th>
                                         <th>Booking Date</th>
-                                        <th>Amount</th>
-                                        <th>Follow Up</th>
                                         <th>Status</th>
                                         <th />
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                    {apppatient.map((app,index) => (
+                                    <tr>
                                         <td>
                                             <h2 className="table-avatar">
                                             <a
                                                 href="doctor-profile.html"
                                                 className="avatar avatar-sm mr-2"
                                             >
-                                                <img
-                                                className="avatar-img rounded-circle"
-                                                src="../..//img/doctors/doctor-thumb-02.jpg"
-                                                alt="User Image"
-                                                />
-                                            </a>
-                                            <a href="doctor-profile.html">
-                                                Dr. Darren Elder <span>Dental</span>
                                             </a>
                                             </h2>
                                         </td>
                                         <td>
-                                            14 Nov 2019{" "}
+                                            {moment(app.date).format("DD-MM-YYYY")}
                                             <span className="d-block text-info">
-                                            10.00 AM
                                             </span>
                                         </td>
-                                        <td>12 Nov 2019</td>
-                                        <td>$160</td>
-                                        <td>16 Nov 2019</td>
+                                        <td>12 Nov 2024</td>
                                         <td>
                                             <span className="badge badge-pill bg-success-light">
-                                            Confirm
+                                            {Checkstatus(app.status)}
                                             </span>
                                         </td>
                                         <td className="text-right">
@@ -211,399 +209,7 @@ const PatientProfile = ({ isLoggedIn, setLoggedIn }) => {
                                             </div>
                                         </td>
                                         </tr>
-                                        <tr>
-                                        <td>
-                                            <h2 className="table-avatar">
-                                            <a
-                                                href="doctor-profile.html"
-                                                className="avatar avatar-sm mr-2"
-                                            >
-                                                <img
-                                                className="avatar-img rounded-circle"
-                                                src="../..//img/doctors/doctor-thumb-02.jpg"
-                                                alt="User Image"
-                                                />
-                                            </a>
-                                            <a href="doctor-profile.html">
-                                                Dr. Darren Elder <span>Dental</span>
-                                            </a>
-                                            </h2>
-                                        </td>
-                                        <td>
-                                            12 Nov 2019{" "}
-                                            <span className="d-block text-info">
-                                            8.00 PM
-                                            </span>
-                                        </td>
-                                        <td>12 Nov 2019</td>
-                                        <td>$250</td>
-                                        <td>14 Nov 2019</td>
-                                        <td>
-                                            <span className="badge badge-pill bg-success-light">
-                                            Confirm
-                                            </span>
-                                        </td>
-                                        <td className="text-right">
-                                            <div className="table-action">
-                                            <a
-                                                
-                                                className="btn btn-sm bg-success-light"
-                                            >
-                                                <i className="far fa-edit" /> Edit
-                                            </a>
-                                            </div>
-                                        </td>
-                                        </tr>
-                                        <tr>
-                                        <td>
-                                            <h2 className="table-avatar">
-                                            <a
-                                                href="doctor-profile.html"
-                                                className="avatar avatar-sm mr-2"
-                                            >
-                                                <img
-                                                className="avatar-img rounded-circle"
-                                                src="../..//img/doctors/doctor-thumb-02.jpg"
-                                                alt="User Image"
-                                                />
-                                            </a>
-                                            <a href="doctor-profile.html">
-                                                Dr. Darren Elder <span>Dental</span>
-                                            </a>
-                                            </h2>
-                                        </td>
-                                        <td>
-                                            11 Nov 2019{" "}
-                                            <span className="d-block text-info">
-                                            11.00 AM
-                                            </span>
-                                        </td>
-                                        <td>10 Nov 2019</td>
-                                        <td>$400</td>
-                                        <td>13 Nov 2019</td>
-                                        <td>
-                                            <span className="badge badge-pill bg-danger-light">
-                                            Cancelled
-                                            </span>
-                                        </td>
-                                        <td className="text-right">
-                                            <div className="table-action">
-                                            <a
-                                                
-                                                className="btn btn-sm bg-success-light"
-                                            >
-                                                <i className="far fa-edit" /> Edit
-                                            </a>
-                                            </div>
-                                        </td>
-                                        </tr>
-                                        <tr>
-                                        <td>
-                                            <h2 className="table-avatar">
-                                            <a
-                                                href="doctor-profile.html"
-                                                className="avatar avatar-sm mr-2"
-                                            >
-                                                <img
-                                                className="avatar-img rounded-circle"
-                                                src="../..//img/doctors/doctor-thumb-02.jpg"
-                                                alt="User Image"
-                                                />
-                                            </a>
-                                            <a href="doctor-profile.html">
-                                                Dr. Darren Elder <span>Dental</span>
-                                            </a>
-                                            </h2>
-                                        </td>
-                                        <td>
-                                            10 Nov 2019{" "}
-                                            <span className="d-block text-info">
-                                            3.00 PM
-                                            </span>
-                                        </td>
-                                        <td>10 Nov 2019</td>
-                                        <td>$350</td>
-                                        <td>12 Nov 2019</td>
-                                        <td>
-                                            <span className="badge badge-pill bg-warning-light">
-                                            Pending
-                                            </span>
-                                        </td>
-                                        <td className="text-right">
-                                            <div className="table-action">
-                                            <a
-                                                href="edit-prescription.html"
-                                                className="btn btn-sm bg-success-light"
-                                            >
-                                                <i className="far fa-edit" /> Edit
-                                            </a>
-                                            <a
-                                                
-                                                className="btn btn-sm bg-danger-light"
-                                            >
-                                                <i className="far fa-trash-alt" /> Cancel
-                                            </a>
-                                            </div>
-                                        </td>
-                                        </tr>
-                                        <tr>
-                                        <td>
-                                            <h2 className="table-avatar">
-                                            <a
-                                                href="doctor-profile.html"
-                                                className="avatar avatar-sm mr-2"
-                                            >
-                                                <img
-                                                className="avatar-img rounded-circle"
-                                                src="../..//img/doctors/doctor-thumb-02.jpg"
-                                                alt="User Image"
-                                                />
-                                            </a>
-                                            <a href="doctor-profile.html">
-                                                Dr. Darren Elder <span>Dental</span>
-                                            </a>
-                                            </h2>
-                                        </td>
-                                        <td>
-                                            9 Nov 2019{" "}
-                                            <span className="d-block text-info">
-                                            7.00 PM
-                                            </span>
-                                        </td>
-                                        <td>8 Nov 2019</td>
-                                        <td>$75</td>
-                                        <td>11 Nov 2019</td>
-                                        <td>
-                                            <span className="badge badge-pill bg-success-light">
-                                            Confirm
-                                            </span>
-                                        </td>
-                                        <td className="text-right">
-                                            <div className="table-action">
-                                            <a
-                                                
-                                                className="btn btn-sm bg-success-light"
-                                            >
-                                                <i className="far fa-edit" /> Edit
-                                            </a>
-                                            </div>
-                                        </td>
-                                        </tr>
-                                        <tr>
-                                        <td>
-                                            <h2 className="table-avatar">
-                                            <a
-                                                href="doctor-profile.html"
-                                                className="avatar avatar-sm mr-2"
-                                            >
-                                                <img
-                                                className="avatar-img rounded-circle"
-                                                src="../..//img/doctors/doctor-thumb-02.jpg"
-                                                alt="User Image"
-                                                />
-                                            </a>
-                                            <a href="doctor-profile.html">
-                                                Dr. Darren Elder <span>Dental</span>
-                                            </a>
-                                            </h2>
-                                        </td>
-                                        <td>
-                                            8 Nov 2019{" "}
-                                            <span className="d-block text-info">
-                                            9.00 AM
-                                            </span>
-                                        </td>
-                                        <td>6 Nov 2019</td>
-                                        <td>$175</td>
-                                        <td>10 Nov 2019</td>
-                                        <td>
-                                            <span className="badge badge-pill bg-danger-light">
-                                            Cancelled
-                                            </span>
-                                        </td>
-                                        <td className="text-right">
-                                            <div className="table-action">
-                                            <a
-                                                
-                                                className="btn btn-sm bg-success-light"
-                                            >
-                                                <i className="far fa-edit" /> Edit
-                                            </a>
-                                            </div>
-                                        </td>
-                                        </tr>
-                                        <tr>
-                                        <td>
-                                            <h2 className="table-avatar">
-                                            <a
-                                                href="doctor-profile.html"
-                                                className="avatar avatar-sm mr-2"
-                                            >
-                                                <img
-                                                className="avatar-img rounded-circle"
-                                                src="../..//img/doctors/doctor-thumb-02.jpg"
-                                                alt="User Image"
-                                                />
-                                            </a>
-                                            <a href="doctor-profile.html">
-                                                Dr. Darren Elder <span>Dental</span>
-                                            </a>
-                                            </h2>
-                                        </td>
-                                        <td>
-                                            8 Nov 2019{" "}
-                                            <span className="d-block text-info">
-                                            6.00 PM
-                                            </span>
-                                        </td>
-                                        <td>6 Nov 2019</td>
-                                        <td>$450</td>
-                                        <td>10 Nov 2019</td>
-                                        <td>
-                                            <span className="badge badge-pill bg-success-light">
-                                            Confirm
-                                            </span>
-                                        </td>
-                                        <td className="text-right">
-                                            <div className="table-action">
-                                            <a
-                                                
-                                                className="btn btn-sm bg-success-light"
-                                            >
-                                                <i className="far fa-edit" /> Edit
-                                            </a>
-                                            </div>
-                                        </td>
-                                        </tr>
-                                        <tr>
-                                        <td>
-                                            <h2 className="table-avatar">
-                                            <a
-                                                href="doctor-profile.html"
-                                                className="avatar avatar-sm mr-2"
-                                            >
-                                                <img
-                                                className="avatar-img rounded-circle"
-                                                src="../..//img/doctors/doctor-thumb-02.jpg"
-                                                alt="User Image"
-                                                />
-                                            </a>
-                                            <a href="doctor-profile.html">
-                                                Dr. Darren Elder <span>Dental</span>
-                                            </a>
-                                            </h2>
-                                        </td>
-                                        <td>
-                                            7 Nov 2019{" "}
-                                            <span className="d-block text-info">
-                                            9.00 PM
-                                            </span>
-                                        </td>
-                                        <td>7 Nov 2019</td>
-                                        <td>$275</td>
-                                        <td>9 Nov 2019</td>
-                                        <td>
-                                            <span className="badge badge-pill bg-info-light">
-                                            Completed
-                                            </span>
-                                        </td>
-                                        <td className="text-right">
-                                            <div className="table-action">
-                                            <a
-                                                
-                                                className="btn btn-sm bg-primary-light"
-                                            >
-                                                <i className="far fa-clock" /> Reschedule
-                                            </a>
-                                            </div>
-                                        </td>
-                                        </tr>
-                                        <tr>
-                                        <td>
-                                            <h2 className="table-avatar">
-                                            <a
-                                                href="doctor-profile.html"
-                                                className="avatar avatar-sm mr-2"
-                                            >
-                                                <img
-                                                className="avatar-img rounded-circle"
-                                                src="../..//img/doctors/doctor-thumb-02.jpg"
-                                                alt="User Image"
-                                                />
-                                            </a>
-                                            <a href="doctor-profile.html">
-                                                Dr. Darren Elder <span>Dental</span>
-                                            </a>
-                                            </h2>
-                                        </td>
-                                        <td>
-                                            6 Nov 2019{" "}
-                                            <span className="d-block text-info">
-                                            8.00 PM
-                                            </span>
-                                        </td>
-                                        <td>4 Nov 2019</td>
-                                        <td>$600</td>
-                                        <td>8 Nov 2019</td>
-                                        <td>
-                                            <span className="badge badge-pill bg-info-light">
-                                            Completed
-                                            </span>
-                                        </td>
-                                        <td className="text-right">
-                                            <div className="table-action">
-                                            <a
-                                                
-                                                className="btn btn-sm bg-primary-light"
-                                            >
-                                                <i className="far fa-clock" /> Reschedule
-                                            </a>
-                                            </div>
-                                        </td>
-                                        </tr>
-                                        <tr>
-                                        <td>
-                                            <h2 className="table-avatar">
-                                            <a
-                                                href="doctor-profile.html"
-                                                className="avatar avatar-sm mr-2"
-                                            >
-                                                <img
-                                                className="avatar-img rounded-circle"
-                                                src="../..//img/doctors/doctor-thumb-02.jpg"
-                                                alt="User Image"
-                                                />
-                                            </a>
-                                            <a href="doctor-profile.html">
-                                                Dr. Darren Elder <span>Dental</span>
-                                            </a>
-                                            </h2>
-                                        </td>
-                                        <td>
-                                            5 Nov 2019{" "}
-                                            <span className="d-block text-info">
-                                            5.00 PM
-                                            </span>
-                                        </td>
-                                        <td>1 Nov 2019</td>
-                                        <td>$100</td>
-                                        <td>7 Nov 2019</td>
-                                        <td>
-                                            <span className="badge badge-pill bg-info-light">
-                                            Completed
-                                            </span>
-                                        </td>
-                                        <td className="text-right">
-                                            <div className="table-action">
-                                            <a
-                                                
-                                                className="btn btn-sm bg-primary-light"
-                                            >
-                                                <i className="far fa-clock" /> Reschedule
-                                            </a>
-                                            </div>
-                                        </td>
-                                        </tr>
+                                        ))}
                                     </tbody>
                                     </table>
                                 </div>
