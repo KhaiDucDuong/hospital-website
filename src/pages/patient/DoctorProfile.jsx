@@ -32,7 +32,7 @@ const DoctorProfile = ({ isLoggedIn, setLoggedIn }) => {
                     <div className="doc-info-left">
                     <div className="doctor-img">
                         <img
-                        src="../../img/doctors/doctor-thumb-02.jpg"
+                        src="../../img/doctors/doctor-thumb-01.jpg"
                         className="img-fluid"
                         alt="User Image"
                         />
