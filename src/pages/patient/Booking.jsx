@@ -8,8 +8,9 @@ import { useLocation } from "react-router-dom";
 function Booking({ isLoggedIn }) {
   const locationData = useLocation();
   let doctor = locationData.state.doctor;
-  console.log(doctor)
-  const [schedules, setSchedules] = useState()
+
+  let [schedules, setSchedules] = useState(null)
+
 
   useEffect(() => {
     const url = "http://localhost:8080/schedules/listSchedule/" + doctor._id;
@@ -18,9 +19,9 @@ function Booking({ isLoggedIn }) {
         const response = await fetch(url, {
           Header: "GET",
         });
-        const data = await response.json();    
-        console.log(data)  
+        const data = await response.json();   
         setSchedules(data)
+
       } catch (error) {
         console.log("error", error);
       }
@@ -30,6 +31,8 @@ function Booking({ isLoggedIn }) {
 
 
   return (
+    <>
+    {schedules && 
     <>
       <Header isLoggedIn={isLoggedIn} />
 
@@ -52,8 +55,8 @@ function Booking({ isLoggedIn }) {
             {/* Calendar */}
             <div className="col-md-7 col-lg-8 col-xl-9">
               <div className="card">
-                <div className="card-body">
-                  <MyCalendar schedulesData={schedules}/>
+                <div className="card-body" >
+                  <MyCalendar schedulesData = {schedules}/>
                 </div>
               </div>
               {/* /Calendar */}
@@ -64,6 +67,8 @@ function Booking({ isLoggedIn }) {
       </div>
 
       <Footer />
+    </>
+    }
     </>
   );
 }

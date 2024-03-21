@@ -11,7 +11,7 @@ const MyCalendar = ({schedulesData}) => {
   const [endTime, setEndTime] = useState("");
   const [symtomDescription, setSymtomDescription] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
-  const [scheduleId, setScheduleId] = useState("");
+  const [scheduleId, setId] = useState("");
 
   const schedules = schedulesData;
 
@@ -32,27 +32,6 @@ const MyCalendar = ({schedulesData}) => {
         "-" +
         dateClickInfo.date.getDate()
     );
-    setShowForm(true);
-  }
-
-  function handleBooking(eventInfo) {
-    // console.log("Date:" + dateClickInfo.date);
-    // console.log("Date Str:" + dateClickInfo.dateStr);
-    // setStartTime(dateClickInfo.date.getHours() + ":00");
-    // setEndTime(dateClickInfo.date.getHours() + 1 + ":00");
-    // console.log(startTime);
-
-
-    // setSelectedDate(
-    //   (evenInfo.event.start.getFullYear() -
-    //     100 +
-    //     2000) +
-    //     "-" +
-    //     (evenInfo.event.start.getMonth() + 1) +
-    //     "-" +
-    //     evenInfo.event.start.getDate()
-    // );
-    console.log(eventInfo)
     setShowForm(true);
   }
 
@@ -87,43 +66,37 @@ const MyCalendar = ({schedulesData}) => {
     return new Date(date).toISOString(); // Convert date to ISO string format
   };
 
+  const handleEventClick = (info) => {
+    setId(info.event._def.publicId);
+    setShowForm(true);
+  }
   const generateScheduleList = (schedules) => {
     let currentDay = new Date(); // Get current day
-    const daysOfWeek = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-    const day =
-      currentDay.getFullYear() +
-      "-" +
-      (currentDay.getMonth() + 1) +
-      "-" +
-      (currentDay.getDate() + 3);
+    const daysOfWeek = ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const day = (currentDay.getFullYear() + "-" + (currentDay.getMonth() + 1) + "-" + (currentDay.getDate() + 3));
     // Initialize the list
 
     const scheduleList = [];
     // Loop through each schedule
-    schedules?.forEach((schedule) => {
+    schedules?.forEach(schedule => {
+
       //Find the index of the provided dayOfWeek
       const index = daysOfWeek.indexOf(schedule.dateOfweek);
-
+  
       // Calculate date for each day in the week based on the provided dayOfWeek
-      const date = new Date(day); // Create a new date object
-      const title = "Booked";
-      const id = schedule._id;
-      date.setDate(currentDay.getDate() + index); // Set the date based on the current day and the offset
-      let time = schedule.time.slice(0, 5);
-      if (time[4] === " ") {
-        time = time.slice(0, 4);
-        time = "0" + time;
-      }
-      let fomat = formatDate(date).slice(0, 11) + time + ":00";
-      scheduleList.push({ title, date: fomat }); // Push schedule with title and formatted date to the list
+        const date = new Date(day); // Create a new date object
+        const title = schedule.availableFlag ? "Booking" : "Booked";
+        const color = title==="Booking" ? "green" : "red";
+        const id = schedule._id;
+        date.setDate(currentDay.getDate() + index); // Set the date based on the current day and the offset
+        let time = schedule.time.slice(0, 5);
+        if (time[4] === " "){
+          time = time.slice(0, 4);
+          time = "0" + time;
+        }
+        let fomat = formatDate(date).slice(0, 11) + time + ":00";
+        scheduleList.push({ title, date: fomat, id: id, color: color}); // Push schedule with title and formatted date to the list
+      
     });
     return scheduleList;
   };
@@ -132,6 +105,7 @@ const MyCalendar = ({schedulesData}) => {
 
   return (
     <>
+
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
         initialView="timeGridWeek"
@@ -140,7 +114,6 @@ const MyCalendar = ({schedulesData}) => {
         slotMaxTime="20:00"
         weekends={true}
         events={result}
-        eventClick={(eventInfo) => handleBooking(eventInfo)}
         eventBackgroundColor="red"
         headerToolbar={{
           start: "timeGridWeek,timeGridDay",
@@ -149,11 +122,10 @@ const MyCalendar = ({schedulesData}) => {
         }}
         allDaySlot={false}
         height={"auto"}
-        dateClick={(dateClickInfo) => handleShow(dateClickInfo)} // Directly pass the function with date argument
-      />
-
+        eventClick={(info) => handleEventClick(info)}
+        dateClick={( dateClickInfo ) => handleShow( dateClickInfo )} // Directly pass the function with date argument
+/>
       {showForm && (
-        <>
           <Modal show={showForm} onHide={handleClose}>
             <Modal.Header closeButton>
               <Modal.Title>Make an appointment</Modal.Title>
@@ -208,7 +180,7 @@ const MyCalendar = ({schedulesData}) => {
               </form>
             </Modal.Body>
           </Modal>
-        </>
+
       )}
     </>
   );
