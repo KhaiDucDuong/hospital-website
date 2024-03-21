@@ -9,7 +9,9 @@ import SlideBar from "../components/admin/slideBar";
 import Dashboard from "../components/admin/dashboard/dashboard";
 import { lazy, useState, useEffect } from "react";
 import { Suspense } from "react";
-
+import { getAllDepartments } from "../services/DepartmentService";
+import { getAllDoctors } from "../services/DoctorService";
+import { getAllPatients } from "../services/PatientService";
 const Appointments = lazy(() =>
   import("../components/admin/appointments/appointments")
 );
@@ -32,6 +34,30 @@ const EditDepartments = lazy(() =>
 );
 export default function Admin({ isLoggedIn, setLoggedIn }) {
   const [selectedWidget, setSelectedWidget] = useState("dashboard");
+
+  const [departmentList, setDepartmentList] = useState([]);
+  const [doctorList, setDoctorList] = useState([]);
+  const [patientList, setPatientList] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+          const responseDoctor = await getAllDoctors();
+          setDoctorList(responseDoctor.data);
+
+          const responsePatient = await getAllPatients();
+          setPatientList(responsePatient.data);
+
+          const responseDepartment = await getAllDepartments();
+          setDepartmentList(responseDepartment.data);
+
+        } catch (error) {
+          console.log(error);
+        }
+    };
+
+    fetchData();
+  }, []);
   return (
     <div className="main-wrapper">
       <Header isLoggedIn={isLoggedIn}  />
@@ -40,25 +66,11 @@ export default function Admin({ isLoggedIn, setLoggedIn }) {
         setSelectedWidget={setSelectedWidget}
       />
       <Suspense>
-        {selectedWidget === "dashboard" && <Dashboard />}
-        {selectedWidget === "appointments" && <Appointments />}
-        {selectedWidget === "departments" && (
-          <Departments
-            selectedWidget={selectedWidget}
-            setSelectedWidget={setSelectedWidget}
-          />
-        )}
-        {selectedWidget === "doctors" && (
-          <Doctors
-            selectedWidget={selectedWidget}
-            setSelectedWidget={setSelectedWidget}
-          />
-        )}
-        {selectedWidget === "patients" && <Patients />}
-        {selectedWidget === "addDoctors" && <AddDoctors />}
-        {selectedWidget === "editDoctors" && <EditDoctors />}
-        {selectedWidget === "addDepartments" && <AddDepartments />}
-        {selectedWidget === "editDepartments" && <EditDepartments />}
+        {selectedWidget === "dashboard" && <Dashboard doctors = {doctorList} patients = {patientList}/>}
+        {selectedWidget === "appointments" && <Appointments departments = {departmentList}/>}
+        {selectedWidget === "departments" && <Departments departments = {departmentList}/>}
+        {selectedWidget === "doctors" && <Doctors doctors = {doctorList}/>}
+        {selectedWidget === "patients" && <Patients patients = {patientList}/>}
       </Suspense>
     </div>
   );
